@@ -42,13 +42,13 @@ const FINANCING = [
     id: "taxes",
     emoji: "💰",
     label: "אעלה מיסים",
-    cynical: "מיסים. כמובן. ישראל כבר בעשירייה הגבוהה של OECD בנטל מס — אבל בטח יש עוד מקום. הוא רגיל.",
+    cynical: "ישראל כבר בעשירייה הגבוהה של OECD בנטל מס. אבל בטח יש עוד מקום.",
   },
   {
     id: "loans",
     emoji: "🏦",
     label: "אקח הלוואות",
-    cynical: "עוד חוב ממשלתי? למה לא. הריבית כבר עולה 65 מיליארד בשנה. הדור הבא ישלם — הם עוד לא מצביעים בכל מקרה.",
+    cynical: "הריבית כבר עולה 65 מיליארד שקל בשנה. הדור הבא ישלם — הם עוד לא מצביעים.",
   },
 ];
 
@@ -97,7 +97,7 @@ export default function BudgetScreen({ onBudgetSet }) {
 
   const handleFinancing = opt => {
     setSelected(opt);
-    setTimeout(() => onBudgetSet(budget, opt.id), 2400);
+    setTimeout(() => onBudgetSet(budget, opt.id), 4000);
   };
 
   return (
@@ -188,9 +188,9 @@ export default function BudgetScreen({ onBudgetSet }) {
           }}>
             <div style={S.notchBadge}>
               <span style={S.notchBadgeTop}>הכנסות</span>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 4, direction: "ltr" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+                <span style={S.notchBadgeLabel}>מיליארד שקל</span>
                 <span style={S.notchBadgeNum}>{REVENUE}</span>
-                <span style={S.notchBadgeLabel}>מיליארד</span>
               </div>
             </div>
             <div style={S.notchConnector} />
@@ -347,7 +347,7 @@ function FinancingModal({ gap, selected, onSelect }) {
                 style={S.cynicalBar}
                 initial={{ scaleX: 1 }}
                 animate={{ scaleX: 0 }}
-                transition={{ duration: 2.4, ease: "linear" }}
+                transition={{ duration: 4.0, ease: "linear" }}
               />
             </motion.div>
           )}

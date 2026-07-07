@@ -159,14 +159,14 @@ export const CATEGORIES = [
         { threshold: -25, severity: "critical", text: "ישראל תחתית OECD בתחבורה ציבורית. כמו תמיד. לנצח." },
       ],
       increase: [
-        { threshold: 10,  severity: "normal",   text: "מטרו מוקדם ב-2 שנים. אולי." },
+        { threshold: 10,  severity: "normal",   text: "מטרו מוקדם בשנתיים. אולי." },
         { threshold: 25,  severity: "normal",   text: "רכבת מהירה ת\"א–ירושלים ב-30 דק. ציביליזציה!" },
         { threshold: 40,  severity: "normal",   text: "ישראל תגיע לממוצע אירופה בתחבורה. בערך ב-2040." },
       ],
     },
     highlights: {
       increase: [
-        { threshold: 10, items: ["מטרו ת\"א מוקדם ב-2 שנים", "רכבת קלה חדשה", "פחות פקק בכבישים"] },
+        { threshold: 10, items: ["מטרו ת\"א מוקדם בשנתיים", "רכבת קלה חדשה", "פחות פקק בכבישים"] },
         { threshold: 25, items: ["רכבת ת\"א–ירושלים ב-30 דק'", "מטרו חיפה מתחיל", "אוטובוסים חשמליים"] },
         { threshold: 40, items: ["ממוצע אירופה בתחבורה", "פקק? מושג של העבר", "תחבורה ציבורית 24/7"] },
       ],
