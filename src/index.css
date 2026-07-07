@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #070B14;
+  --surface:      rgba(255,255,255,0.032);
+  --surface-high: rgba(255,255,255,0.055);
+  --border:       rgba(255,255,255,0.08);
+  --border-hi:    rgba(255,255,255,0.14);
+  --text-1:       #F8FAFC;
+  --text-2:       #94A3B8;
+  --text-3:       #475569;
+  --text-4:       #1E293B;
+  --green:        #10B981;
+  --amber:        #F59E0B;
+  --red:          #EF4444;
+  --indigo:       #6366F1;
+  --radius-sm:    10px;
+  --radius-md:    16px;
+  --radius-lg:    22px;
+  --radius-xl:    28px;
+}
+
+html, body, #root { min-height: 100vh; width: 100%; overflow-x: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: 'Inter', 'Segoe UI', 'Arial Hebrew', Arial, sans-serif;
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+button { cursor: pointer; border: none; outline: none; font-family: inherit; }
+input  { font-family: inherit; direction: rtl; }
+
+/* ── Mesh background ── */
+.mesh-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 60% at 15% 0%,   rgba(99,102,241,0.13) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 85% 90%,  rgba(16,185,129,0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 45%,  rgba(236,72,153,0.05) 0%, transparent 55%),
+    #070B14;
+}
+
+/* ── Subtle dot grid ── */
+.grid-overlay {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 80% 80% at center, black 30%, transparent 100%);
+}
+
+/* ── Terminal scanlines (for landing screen) ── */
+.scanlines {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: repeating-linear-gradient(
+    transparent 0px, transparent 3px,
+    rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 4px
+  );
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 2px; }
+
+/* ── Utility ── */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
