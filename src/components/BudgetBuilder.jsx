@@ -65,18 +65,24 @@ export default function BudgetBuilder({ values, setValues, onFinish, onTimeout, 
   }, [setValues]);
 
   const handleNext = () => {
-    if (!isLast) { setCurrentIdx(i => i + 1); } else { onFinish(); }
+    if (!isLast) {
+      setInsight(null);
+      clearTimeout(timer.current);
+      setCurrentIdx(i => i + 1);
+    } else { onFinish(); }
   };
 
   const handleBack = () => {
-    if (currentIdx > 0) setCurrentIdx(i => i - 1);
+    if (currentIdx > 0) {
+      setInsight(null);
+      clearTimeout(timer.current);
+      setCurrentIdx(i => i - 1);
+    }
   };
 
-  // Clear insight whenever the user navigates to a new category
+  // Keep catId ref in sync for the stale-closure guard in handleChange
   useEffect(() => {
     currentCatIdRef.current = CATEGORIES[currentIdx].id;
-    setInsight(null);
-    clearTimeout(timer.current);
   }, [currentIdx]);
 
   useEffect(() => () => {
