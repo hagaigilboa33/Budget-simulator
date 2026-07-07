@@ -29,9 +29,9 @@ export default function BudgetBuilder({ values, setValues, onFinish, onTimeout, 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [insight,    setInsight]    = useState(null);
   const [flash,      setFlash]      = useState(null);
-  const timer       = useRef(null);
-  const flashTimer  = useRef(null);
-  const navigating  = useRef(false);
+  const timer          = useRef(null);
+  const flashTimer     = useRef(null);
+  const currentCatIdRef = useRef(CATEGORIES[0].id);
 
   const timeLeft  = useCountdown(GAME_SECONDS, onTimeout);
   const isUrgent  = timeLeft <= 10;
@@ -46,45 +46,38 @@ export default function BudgetBuilder({ values, setValues, onFinish, onTimeout, 
     flashTimer.current = setTimeout(() => setFlash(null), 900);
   };
 
-  const handleChange = useCallback((raw) => {
-    const cat   = CATEGORIES[currentIdx];
+  const handleChange = useCallback((raw, catId) => {
+    if (catId !== currentCatIdRef.current) return; // stale slider call — ignore
+    const cat   = CATEGORIES.find(c => c.id === catId);
     const val   = Math.round(Math.max(cat.min, Math.min(cat.max, raw)));
     const delta = val - cat.current;
     setValues(prev => ({ ...prev, [cat.id]: val }));
     const ins = getInsight(cat, delta);
-    if (ins && !navigating.current) {
+    if (ins) {
       clearTimeout(timer.current);
       setInsight({ text: ins.text, emoji: cat.emoji, color: cat.color, severity: ins.severity, id: Date.now() });
       timer.current = setTimeout(() => setInsight(null), 5500);
-      // Flash only on cuts (delta < 0), not on increases
       if (delta < 0) {
         if (ins.severity === "critical") triggerFlash("critical");
         else if (ins.severity === "warning") triggerFlash("warning");
       }
     }
-  }, [setValues, currentIdx]);
+  }, [setValues]);
 
   const handleNext = () => {
-    if (!isLast) {
-      navigating.current = true;
-      setCurrentIdx(i => i + 1);
-      setInsight(null);
-      clearTimeout(timer.current);
-      setTimeout(() => { navigating.current = false; }, 400);
-    } else {
-      onFinish();
-    }
+    if (!isLast) { setCurrentIdx(i => i + 1); } else { onFinish(); }
   };
 
   const handleBack = () => {
-    if (currentIdx > 0) {
-      navigating.current = true;
-      setCurrentIdx(i => i - 1);
-      setInsight(null);
-      clearTimeout(timer.current);
-      setTimeout(() => { navigating.current = false; }, 400);
-    }
+    if (currentIdx > 0) setCurrentIdx(i => i - 1);
   };
+
+  // Clear insight whenever the user navigates to a new category
+  useEffect(() => {
+    currentCatIdRef.current = CATEGORIES[currentIdx].id;
+    setInsight(null);
+    clearTimeout(timer.current);
+  }, [currentIdx]);
 
   useEffect(() => () => {
     clearTimeout(timer.current);
@@ -380,8 +373,8 @@ function BigSlider({ cat, value, onChange }) {
   const onMouseDown = e => {
     e.preventDefault();
     dragging.current = true;
-    onChange(getVal(e.clientX));
-    const mm = e => { if (dragging.current) onChange(getVal(e.clientX)); };
+    onChange(getVal(e.clientX), cat.id);
+    const mm = e => { if (dragging.current) onChange(getVal(e.clientX), cat.id); };
     const mu = () => {
       dragging.current = false;
       window.removeEventListener("mousemove", mm);
@@ -393,8 +386,8 @@ function BigSlider({ cat, value, onChange }) {
 
   const onTouchStart = e => {
     dragging.current = true;
-    onChange(getVal(e.touches[0].clientX));
-    const tm = e => { if (dragging.current) onChange(getVal(e.touches[0].clientX)); };
+    onChange(getVal(e.touches[0].clientX), cat.id);
+    const tm = e => { if (dragging.current) onChange(getVal(e.touches[0].clientX), cat.id); };
     const tu = () => {
       dragging.current = false;
       window.removeEventListener("touchmove", tm);
