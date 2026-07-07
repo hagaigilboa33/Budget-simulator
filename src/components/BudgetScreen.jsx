@@ -188,9 +188,9 @@ export default function BudgetScreen({ onBudgetSet }) {
           }}>
             <div style={S.notchBadge}>
               <span style={S.notchBadgeTop}>הכנסות</span>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-                <span style={S.notchBadgeLabel}>מיליארד שקל</span>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 4, direction: "rtl" }}>
                 <span style={S.notchBadgeNum}>{REVENUE}</span>
+                <span style={S.notchBadgeLabel}>מיליארד שקל</span>
               </div>
             </div>
             <div style={S.notchConnector} />

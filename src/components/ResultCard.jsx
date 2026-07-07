@@ -18,58 +18,152 @@ const SHORT = {
 };
 
 /* ═══════════════════════════════════
-   SMART ANALYSIS — 3 always-present insights
+   SMART ANALYSIS — 3 personalized insights based on player's actual choices
 ═══════════════════════════════════ */
 function buildAnalysis(withDelta, deficit) {
-  const cat = id => withDelta.find(c => c.id === id);
+  const get = id => withDelta.find(c => c.id === id);
 
-  const defVal     = cat("defense").value;
-  const defPct     = (defVal / GDP * 100).toFixed(1);
-  const hlthVal    = cat("health").value;
-  const eduVal     = cat("education").value;
-  const hlthEduPct = ((hlthVal + eduVal) / GDP * 100).toFixed(1);
-  const totalDelta = withDelta.reduce((a, c) => a + c.delta, 0);
+  const defDelta  = get("defense").delta;
+  const defVal    = get("defense").value;
+  const defPct    = (defVal / GDP * 100).toFixed(1);
+  const hlthDelta = get("health").delta;
+  const eduDelta  = get("education").delta;
+  const wlfrDelta = get("welfare").delta;
+  const socDelta  = get("social").delta;
+  const infrDelta = get("infrastructure").delta;
 
-  const defCtx = defVal > 170
-    ? `גבוה מהיסטורי — ישראל תהיה בין 3 המדינות המוציאות ביותר`
-    : defVal < 110
-    ? `נמוך מהנוכחי — הרתעה אזורית נחלשת`
-    : `ישראל לפניך: 5.9% · ממוצע OECD: 1.8%`;
+  const civilianDelta = hlthDelta + eduDelta + wlfrDelta + socDelta + infrDelta;
+  const hlthEduVal    = get("health").value + get("education").value;
+  const hlthEduPct    = (hlthEduVal / GDP * 100).toFixed(1);
+  const hlthEduDelta  = hlthDelta + eduDelta;
+  const totalDelta    = withDelta.reduce((s, c) => s + c.delta, 0);
 
-  const hlthCtx = hlthVal + eduVal > 205
-    ? `השקעה גבוהה — מתקרב לממוצע OECD (10.5%)`
-    : hlthVal + eduVal < 160
-    ? `נמוך — ישראל מאחרת עוד יותר מה-OECD`
-    : `ישראל לפניך: 7.4% · ממוצע OECD: 10.5%`;
+  const sorted   = [...withDelta].sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
+  const topMover = sorted[0];
+  const topDown  = sorted.filter(c => c.delta <= -4)[0];
 
-  const deficitCtx = deficit < BOI_TARGET
-    ? `✓ מתחת ליעד בנק ישראל — ממשלת שמרנות פיסקלית`
-    : deficit < GOV_DEFICIT
-    ? `מתחת לממשלה הנוכחית, אבל מעל יעד BOI (3.5%)`
-    : deficit < 7
-    ? `מעל הממשלה הנוכחית — הדור הבא ישלם את ההפרש`
-    : `גבוה מהיסטורי — שוקי האג"ח ישימו לב`;
+  /* ── ROW 1: Budget Character ── */
+  let ins1;
+  if (defDelta >= 20) {
+    const src = topDown && topDown.id !== "defense"
+      ? `${topDown.shortLabel} ספג את הקיצוץ.`
+      : `מומן מגירעון גבוה.`;
+    ins1 = {
+      emoji: "🛡️", label: "תקציב לחימה",
+      value: `+${defDelta} מיליארד לביטחון`,
+      context: `${defPct}% מהתמ"ג על ביטחון — בין 3 המדינות הגבוהות ביותר בעולם. ${src}`,
+    };
+  } else if (defDelta >= 8) {
+    ins1 = {
+      emoji: "🛡️", label: "חיזוק ביטחוני",
+      value: `+${defDelta} מיליארד לביטחון`,
+      context: `${defPct}% מהתמ"ג — מעל ישראל היום (5.9%). ${topDown && topDown.id !== "defense" ? `${topDown.shortLabel} שילם את המחיר (${topDown.delta}M).` : `נטען מגירעון.`}`,
+    };
+  } else if (defDelta <= -15 && civilianDelta >= 10) {
+    ins1 = {
+      emoji: "🕊️", label: "מביטחון לאזרחי",
+      value: `${defDelta} → +${civilianDelta} מיליארד`,
+      context: `${Math.abs(defDelta)} מיליארד מועברים מביטחון לשירותים חברתיים — העברה שאף ממשלה ישראלית לא ביצעה ב-20 שנה.`,
+    };
+  } else if (defDelta <= -8) {
+    ins1 = {
+      emoji: "🕊️", label: "ריסון ביטחוני",
+      value: `${defDelta} מיליארד מביטחון`,
+      context: `${defPct}% מהתמ"ג — נמוך מהנוכחי (5.9%). ${civilianDelta > 0 ? `${civilianDelta} מיליארד פנויים לאזרחי.` : `הקיצוץ לא הופנה לשירותים.`}`,
+    };
+  } else if (civilianDelta >= 20) {
+    ins1 = {
+      emoji: "🏗️", label: "השקעה אזרחית",
+      value: `+${civilianDelta} מיליארד לאזרחי`,
+      context: `${hlthEduPct}% מהתמ"ג לבריאות+חינוך — מתקרב לממוצע OECD (10.5%). ${deficit > 5.5 ? `הגירעון ${deficit}% הוא המחיר.` : `בשילוב עם גירעון סביר — נדיר.`}`,
+    };
+  } else if (totalDelta <= -15) {
+    ins1 = {
+      emoji: "✂️", label: "תקציב צנע",
+      value: `${totalDelta} מיליארד בסה"כ`,
+      context: `קיצוץ כולל — ממשל מינימליסטי. ${deficit < BOI_TARGET ? `גירעון ${deficit}%: מתחת ליעד בנק ישראל לראשונה בשנים.` : `אבל הגירעון ${deficit}% נשאר גבוה.`}`,
+    };
+  } else if (topMover && Math.abs(topMover.delta) >= 6) {
+    const dir = topMover.delta > 0 ? "+" : "";
+    ins1 = {
+      emoji: topMover.emoji, label: `${topMover.shortLabel} — ההימור הגדול`,
+      value: `${dir}${topMover.delta} מיליארד`,
+      context: `${topMover.shortLabel} קיבל את השינוי הגדול ביותר. ${topDown && topDown.id !== topMover.id ? `מומן מ: ${topDown.shortLabel} (${topDown.delta}M).` : topMover.delta > 0 ? `מומן מגירעון.` : `חיסכון שהופנה לגירעון.`}`,
+    };
+  } else {
+    ins1 = {
+      emoji: "⚖️", label: "שינוי שמרני",
+      value: `±${Math.abs(totalDelta)} מיליארד`,
+      context: `בחירות קרובות לתקציב הממשלה — ללא הרפתקאות. הגירעון ${deficit}% (ממשלה: ${GOV_DEFICIT}%).`,
+    };
+  }
 
-  return [
-    {
-      emoji: "🛡️",
-      label: "ביטחון ולאומי",
-      value: `${defPct}% מהתמ"ג`,
-      context: defCtx,
-    },
-    {
-      emoji: "📚",
-      label: "בריאות + חינוך",
+  /* ── ROW 2: Key Trade-Off ── */
+  let ins2;
+  const bigSecCivTrade = Math.abs(defDelta) >= 8 && Math.abs(civilianDelta) >= 8;
+  if (bigSecCivTrade && defDelta > 0 && civilianDelta < 0) {
+    ins2 = {
+      emoji: "⚖️", label: "ביטחון על חשבון רווחה",
+      value: `+${defDelta} / ${civilianDelta} מיליארד`,
+      context: `ביטחון עלה ב-${defDelta}, האזרחי ירד ב-${Math.abs(civilianDelta)}. סדר עדיפויות ברור — ישראל במצב מלחמה.`,
+    };
+  } else if (bigSecCivTrade && defDelta < 0 && civilianDelta > 0) {
+    ins2 = {
+      emoji: "⚖️", label: "מאבטחים פחות, חיים יותר",
+      value: `${defDelta} → +${civilianDelta} מיליארד`,
+      context: `העברה מביטחון לשירותים חברתיים. שאלת מיליארד: האם ישראל יכולה להרשות לעצמה?`,
+    };
+  } else {
+    ins2 = {
+      emoji: "📚", label: "בריאות + חינוך",
       value: `${hlthEduPct}% מהתמ"ג`,
-      context: hlthCtx,
-    },
-    {
-      emoji: "📊",
-      label: "גירעון",
-      value: `${deficit}%`,
-      context: deficitCtx,
-    },
-  ];
+      context: hlthEduDelta >= 12
+        ? `+${hlthEduDelta} מיליארד — מתקרב לממוצע OECD (10.5%). זו ההשקעה שמשנה דור.`
+        : hlthEduDelta <= -8
+        ? `${hlthEduDelta} מיליארד — ישראל מתרחקת עוד מממוצע OECD (10.5%). מחיר ארוך טווח.`
+        : hlthEduDelta >= 5
+        ? `+${hlthEduDelta} מיליארד — צעד בכיוון הנכון. הפער מ-OECD קטן, אבל נשאר.`
+        : hlthEduDelta <= -3
+        ? `${hlthEduDelta} מיליארד — ישראל כבר 3% מתחת לממוצע OECD. הקיצוץ מרחיק.`
+        : `${hlthEduPct}% לעומת ממוצע OECD 10.5% — פער שנשאר ללא מענה.`,
+    };
+  }
+
+  /* ── ROW 3: Fiscal Verdict ── */
+  let ins3;
+  if (deficit < 2.5) {
+    ins3 = {
+      emoji: "💰", label: "שמרנות פיסקלית",
+      value: `${deficit}% גירעון`,
+      context: `איזון כמעט מלא — לא נראה בישראל מ-2000. שוקי האג"ח יתגמלו, אבל הקיצוצים שמימנו זאת גבו מחיר.`,
+    };
+  } else if (deficit < BOI_TARGET) {
+    ins3 = {
+      emoji: "✅", label: "מתחת ליעד בנק ישראל",
+      value: `${deficit}% גירעון`,
+      context: `${deficit}% — מתחת ל-3.5% שבנק ישראל לא הצליח לבנות ממשלה לפיו מ-2008. דירוג האשראי בכיוון.`,
+    };
+  } else if (deficit < GOV_DEFICIT) {
+    ins3 = {
+      emoji: "📉", label: "טוב מהממשלה, לא מספיק",
+      value: `${deficit}% גירעון`,
+      context: `נמוך ב-${(GOV_DEFICIT - deficit).toFixed(1)}% מהממשלה — אבל מעל יעד BOI. כל אחוז גירעון = ~${Math.round(GDP * 0.01)} מיליארד ₪ חוב חדש.`,
+    };
+  } else if (deficit < 6.5) {
+    ins3 = {
+      emoji: "⚠️", label: "מעל הממשלה",
+      value: `${deficit}% גירעון`,
+      context: `${(deficit - GOV_DEFICIT).toFixed(1)}% מעל הממשלה — שגם היא בבעיה. הריבית על החוב כבר 65 מיליארד ₪ לשנה; גדלה.`,
+    };
+  } else {
+    ins3 = {
+      emoji: "🚨", label: "גירעון מסוכן",
+      value: `${deficit}% גירעון`,
+      context: `${deficit}% — בטריטוריה שמושכת עדכון דירוג. S&P ו-Moody's שמים לב. כל 1% גירעון = ~24 מיליארד ₪ חוב.`,
+    };
+  }
+
+  return [ins1, ins2, ins3];
 }
 
 /* ═══════════════════════════════════
