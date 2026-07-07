@@ -318,12 +318,14 @@ function CategoryCard({ cat, value, onChange }) {
             style={{
               ...css.catValueNum,
               color: !isChanged ? "var(--text-2)" : isUp ? "#34D399" : "#F87171",
+              display: "flex", alignItems: "baseline", direction: "ltr", gap: 6,
             }}
             initial={{ scale: 1.15 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 400, damping: 22 }}
           >
-            <span dir="ltr">{value} מיליארד</span>
+            <span>{value}</span>
+            <span style={{ fontSize: "0.5em", fontWeight: 600 }}>מיליארד</span>
           </motion.div>
           <AnimatePresence>
             {isChanged && (
@@ -338,7 +340,10 @@ function CategoryCard({ cat, value, onChange }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
               >
-                <span dir="ltr">{isUp ? "+" : ""}{delta} מיליארד</span>
+                <span style={{ display: "flex", alignItems: "baseline", direction: "ltr", gap: 3 }}>
+                  <span>{isUp ? "+" : ""}{delta}</span>
+                  <span style={{ fontSize: "0.85em" }}>מיליארד</span>
+                </span>
               </motion.div>
             )}
           </AnimatePresence>

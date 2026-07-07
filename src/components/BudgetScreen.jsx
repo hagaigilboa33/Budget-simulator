@@ -42,7 +42,7 @@ const FINANCING = [
     id: "taxes",
     emoji: "💰",
     label: "אעלה מיסים",
-    cynical: "מיסים. כמובן. האזרח הישראלי כבר מפריש מעל 50% ממשכורתו לטובת המדינה — אבל בטח יש עוד מקום לסחוט. הוא רגיל.",
+    cynical: "מיסים. כמובן. ישראל כבר בעשירייה הגבוהה של OECD בנטל מס — אבל בטח יש עוד מקום. הוא רגיל.",
   },
   {
     id: "loans",
@@ -188,7 +188,10 @@ export default function BudgetScreen({ onBudgetSet }) {
           }}>
             <div style={S.notchBadge}>
               <span style={S.notchBadgeTop}>הכנסות</span>
-              <span dir="ltr" style={S.notchBadgeNum}>{REVENUE} מיליארד</span>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 4, direction: "ltr" }}>
+                <span style={S.notchBadgeNum}>{REVENUE}</span>
+                <span style={S.notchBadgeLabel}>מיליארד</span>
+              </div>
             </div>
             <div style={S.notchConnector} />
           </div>
@@ -256,7 +259,7 @@ export default function BudgetScreen({ onBudgetSet }) {
           >
             {isOver ? (
               <span style={{ color: "#F59E0B" }}>
-                ⚠ חורג מהכנסות ב-<strong>{gap}</strong> מיליארד — תצטרך לממן
+                ⚠ חורג מההכנסות ב-<strong>{gap}</strong> מיליארד — תצטרך לממן
               </span>
             ) : gap === 0 ? (
               <span style={{ color: "#10B981" }}>✓ תקציב מאוזן — עומד בהכנסות הצפויות לשנת 2027</span>
@@ -465,8 +468,12 @@ const S = {
     letterSpacing: "0.1em", color: "rgba(16,185,129,0.65)",
   },
   notchBadgeNum: {
-    fontSize: 12, fontWeight: 700, color: "rgba(16,185,129,0.95)",
+    fontSize: 13, fontWeight: 800, color: "rgba(16,185,129,0.95)",
     letterSpacing: "-0.01em",
+  },
+  notchBadgeLabel: {
+    fontSize: 10, fontWeight: 600, color: "rgba(16,185,129,0.75)",
+    letterSpacing: "0.02em",
   },
   notchConnector: {
     width: 1, height: 12,
