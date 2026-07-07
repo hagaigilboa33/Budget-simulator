@@ -7,13 +7,6 @@ const MAX_BUDGET = 820;
 const STEP       = 5;
 const REVENUE_PCT = ((REVENUE - MIN_BUDGET) / (MAX_BUDGET - MIN_BUDGET)) * 100;
 
-const PRESETS = [
-  { value: 613, label: "613 — מאוזן" },
-  { value: 650, label: "650" },
-  { value: 700, label: "700 — ממשלה" },
-  { value: 750, label: "750" },
-];
-
 /* Cynical comments by gap (budget - 613) */
 const SLIDER_COMMENTS = {
   increase: [
@@ -21,15 +14,15 @@ const SLIDER_COMMENTS = {
     { threshold: 20,  text: "שוקולד לכולם. מישהו ישלם את החשבון 🍫" },
     { threshold: 40,  text: "הממשלה הנוכחית כבר ניסתה בדיוק את זה. טוב, נו 😏" },
     { threshold: 70,  text: "כבר לא תקציב — זה פנטזיה מספרית ✨" },
-    { threshold: 100, text: "ארגנטינה פשטה רגל מפחות מזה. אבל תמשיך 🇦🇷" },
+    { threshold: 100, text: "ארגנטינה פשטה רגל על פחות מזה. אבל תמשיך" },
     { threshold: 140, text: "כלכלנים מסביבך בוכים בשקט 😢" },
     { threshold: 170, text: "בשלב הזה הדפסת כסף נשמעת כמו אופציה הגיונית 🖨️" },
   ],
   decrease: [
     { threshold: 5,   text: "שמרן קצת. בנק ישראל שר לכבודך 🏦" },
-    { threshold: 15,  text: "ממשלת ישראל מקנאת בך ברצינות 😤" },
+    { threshold: 15,  text: "המספריים של אדוארד — הגרסה הישראלית" },
     { threshold: 25,  text: "שמרן כמו שוויץ — בלי האלפים 🇨🇭" },
-    { threshold: 33,  text: "ממשלה ישראלית לא הצליחה לזה מאז 1989 📅" },
+    { threshold: 33,  text: "חותך ללא רחם, קרן המטבע על ענן" },
   ],
 };
 
@@ -179,7 +172,27 @@ export default function BudgetScreen({ onBudgetSet }) {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5 }}
+          style={{ position: "relative", paddingTop: 48 }}
         >
+          {/* Revenue badge — floats above track */}
+          <div style={{
+            position: "absolute",
+            left: `${REVENUE_PCT}%`,
+            top: 0,
+            transform: "translateX(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            pointerEvents: "none",
+            zIndex: 4,
+          }}>
+            <div style={S.notchBadge}>
+              <span style={S.notchBadgeTop}>הכנסות</span>
+              <span dir="ltr" style={S.notchBadgeNum}>{REVENUE} מיליארד</span>
+            </div>
+            <div style={S.notchConnector} />
+          </div>
+
           <div
             ref={trackRef}
             style={S.track}
@@ -196,11 +209,20 @@ export default function BudgetScreen({ onBudgetSet }) {
               transition={{ type: "spring", stiffness: 260, damping: 28 }}
             />
 
-            {/* Revenue notch */}
-            <div style={{ ...S.notch, left: `${REVENUE_PCT}%` }}>
-              <div style={S.notchLabel}>הכנסות<br /><span dir="ltr">{REVENUE} מיליארד</span></div>
-              <div style={S.notchPip} />
-            </div>
+            {/* Revenue notch pip */}
+            <div style={{
+              position: "absolute",
+              left: `${REVENUE_PCT}%`,
+              top: "50%",
+              transform: "translateX(-50%) translateY(-50%)",
+              width: 3,
+              height: 18,
+              borderRadius: 1.5,
+              background: "rgba(16,185,129,0.85)",
+              boxShadow: "0 0 8px rgba(16,185,129,0.3)",
+              zIndex: 3,
+              pointerEvents: "none",
+            }} />
 
             {/* Thumb */}
             <motion.div
@@ -216,29 +238,6 @@ export default function BudgetScreen({ onBudgetSet }) {
             <span dir="ltr" style={S.sliderEndText}>{MIN_BUDGET} מיליארד</span>
             <span dir="ltr" style={S.sliderEndText}>{MAX_BUDGET} מיליארד</span>
           </div>
-        </motion.div>
-
-        {/* Presets */}
-        <motion.div
-          style={S.presets}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.35 }}
-        >
-          {PRESETS.map(p => (
-            <button
-              key={p.value}
-              style={{
-                ...S.chip,
-                background: budget === p.value ? "rgba(99,102,241,0.22)" : "rgba(255,255,255,0.05)",
-                border: `1.5px solid ${budget === p.value ? "rgba(99,102,241,0.6)" : "rgba(255,255,255,0.1)"}`,
-                color: budget === p.value ? "#818CF8" : "rgba(255,255,255,0.45)",
-              }}
-              onClick={() => setBudget(p.value)}
-            >
-              {p.label}
-            </button>
-          ))}
         </motion.div>
 
         {/* Status */}
@@ -449,25 +448,29 @@ const S = {
     transform: "translateY(-50%)",
     left: 0, height: 6, borderRadius: 100,
   },
-  notch: {
-    position: "absolute",
-    top: 0, bottom: 0,
+  notchBadge: {
+    background: "rgba(16,185,129,0.07)",
+    border: "1px solid rgba(16,185,129,0.22)",
+    borderRadius: 8,
+    padding: "5px 12px",
+    textAlign: "center",
+    whiteSpace: "nowrap",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
-    pointerEvents: "none",
-    transform: "translateX(-50%)",
-    zIndex: 3,
+    gap: 2,
   },
-  notchLabel: {
-    fontSize: 9, fontWeight: 700, letterSpacing: "0.05em",
-    color: "rgba(16,185,129,0.8)", textTransform: "uppercase",
-    marginBottom: 3, whiteSpace: "nowrap", textAlign: "center", lineHeight: 1.3,
+  notchBadgeTop: {
+    fontSize: 9, fontWeight: 700, textTransform: "uppercase",
+    letterSpacing: "0.1em", color: "rgba(16,185,129,0.65)",
   },
-  notchPip: {
-    width: 3, height: 14, borderRadius: 2,
-    background: "rgba(16,185,129,0.7)",
+  notchBadgeNum: {
+    fontSize: 12, fontWeight: 700, color: "rgba(16,185,129,0.95)",
+    letterSpacing: "-0.01em",
+  },
+  notchConnector: {
+    width: 1, height: 12,
+    background: "rgba(16,185,129,0.28)",
   },
   thumb: {
     position: "absolute",
@@ -488,24 +491,6 @@ const S = {
     marginBottom: 20,
   },
   sliderEndText: { fontSize: 11, color: "rgba(255,255,255,0.18)", fontWeight: 500 },
-
-  /* Presets */
-  presets: {
-    display: "flex",
-    gap: 8,
-    flexWrap: "wrap",
-    justifyContent: "center",
-    marginBottom: 20,
-  },
-  chip: {
-    padding: "8px 14px",
-    borderRadius: 100,
-    fontSize: 12, fontWeight: 600,
-    cursor: "pointer",
-    transition: "all 0.2s",
-    letterSpacing: "0.01em",
-    fontFamily: "'Inter', system-ui, sans-serif",
-  },
 
   statusBar: {
     padding: "14px 18px",
