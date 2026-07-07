@@ -29,8 +29,9 @@ export default function BudgetBuilder({ values, setValues, onFinish, onTimeout, 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [insight,    setInsight]    = useState(null);
   const [flash,      setFlash]      = useState(null);
-  const timer     = useRef(null);
-  const flashTimer = useRef(null);
+  const timer       = useRef(null);
+  const flashTimer  = useRef(null);
+  const navigating  = useRef(false);
 
   const timeLeft  = useCountdown(GAME_SECONDS, onTimeout);
   const isUrgent  = timeLeft <= 10;
@@ -51,7 +52,7 @@ export default function BudgetBuilder({ values, setValues, onFinish, onTimeout, 
     const delta = val - cat.current;
     setValues(prev => ({ ...prev, [cat.id]: val }));
     const ins = getInsight(cat, delta);
-    if (ins) {
+    if (ins && !navigating.current) {
       clearTimeout(timer.current);
       setInsight({ text: ins.text, emoji: cat.emoji, color: cat.color, severity: ins.severity, id: Date.now() });
       timer.current = setTimeout(() => setInsight(null), 5500);
@@ -65,9 +66,11 @@ export default function BudgetBuilder({ values, setValues, onFinish, onTimeout, 
 
   const handleNext = () => {
     if (!isLast) {
+      navigating.current = true;
       setCurrentIdx(i => i + 1);
       setInsight(null);
       clearTimeout(timer.current);
+      setTimeout(() => { navigating.current = false; }, 400);
     } else {
       onFinish();
     }
@@ -75,9 +78,11 @@ export default function BudgetBuilder({ values, setValues, onFinish, onTimeout, 
 
   const handleBack = () => {
     if (currentIdx > 0) {
+      navigating.current = true;
       setCurrentIdx(i => i - 1);
       setInsight(null);
       clearTimeout(timer.current);
+      setTimeout(() => { navigating.current = false; }, 400);
     }
   };
 
@@ -303,7 +308,7 @@ function CategoryCard({ cat, value, onChange }) {
           <div>
             <div style={css.catName}>{cat.label}</div>
             <div style={css.catGovLine}>
-              ממשלה: <span dir="ltr" style={{ color: "#64748B", fontWeight: 600 }}>{cat.current} מיליארד ₪</span>
+              ממשלה: <span dir="ltr" style={{ color: "#64748B", fontWeight: 600 }}>{cat.current} מיליארד</span>
             </div>
           </div>
         </div>
@@ -468,7 +473,7 @@ function InsightToast({ insight }) {
       }}
       initial={{ opacity: 0, y: 24, scale: 0.97 }}
       animate={{ opacity: 1, y: 0,  scale: 1 }}
-      exit={{   opacity: 0, y: 12, scale: 0.97 }}
+      exit={{   opacity: 0, y: 12, scale: 0.97, transition: { duration: 0.12 } }}
       transition={{ type: "spring", stiffness: 320, damping: 26 }}
     >
       <div style={css.toastInner}>
