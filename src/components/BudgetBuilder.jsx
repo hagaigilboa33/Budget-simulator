@@ -54,9 +54,14 @@ export default function BudgetBuilder({ values, setValues, onFinish, onTimeout, 
     setValues(prev => ({ ...prev, [cat.id]: val }));
     const ins = getInsight(cat, delta);
     if (ins) {
+      // Always reset the dismiss timer so insight stays while user is dragging
       clearTimeout(timer.current);
-      setInsight({ text: ins.text, emoji: cat.emoji, color: cat.color, severity: ins.severity, id: Date.now(), catId: cat.id });
       timer.current = setTimeout(() => setInsight(null), 5500);
+      // Only update state (and trigger animation) when the text actually changes
+      setInsight(prev => {
+        if (prev && prev.text === ins.text && prev.catId === cat.id) return prev;
+        return { text: ins.text, emoji: cat.emoji, color: cat.color, severity: ins.severity, id: Date.now(), catId: cat.id };
+      });
       if (delta < 0) {
         if (ins.severity === "critical") triggerFlash("critical");
         else if (ins.severity === "warning") triggerFlash("warning");
