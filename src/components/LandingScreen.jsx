@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import calcalistLogo from "../assets/calcalist-logo.jpg";
 
 /* ─── Phases ───
   0: initial dark
@@ -82,11 +83,17 @@ export default function LandingScreen({ onStart }) {
         {/* Eyebrow */}
         <motion.div
           style={S.eyebrow}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: phase >= 1 ? 1 : 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: phase >= 1 ? 1 : 0, y: phase >= 1 ? 0 : -8 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          כלכליסט · בחירות 2026
+          <img
+            src={calcalistLogo}
+            alt="כלכליסט"
+            style={S.logoImg}
+          />
+          <span style={S.eyebrowSep}>·</span>
+          <span style={S.eyebrowYear}>בחירות 2026</span>
         </motion.div>
 
         {/* Status lines (small typewriter) */}
@@ -240,12 +247,33 @@ const S = {
   },
 
   eyebrow: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    marginBottom: 28,
+  },
+
+  logoImg: {
+    height: 30,
+    width: "auto",
+    borderRadius: 5,
+    display: "block",
+    boxShadow: "0 2px 12px rgba(220,38,38,0.35)",
+  },
+
+  eyebrowSep: {
+    fontSize: 13,
+    color: "rgba(255,255,255,0.2)",
+    fontWeight: 300,
+  },
+
+  eyebrowYear: {
     fontSize: 11,
     fontWeight: 600,
     letterSpacing: "0.14em",
     textTransform: "uppercase",
     color: "rgba(99,102,241,0.8)",
-    marginBottom: 28,
   },
 
   statusBox: {
