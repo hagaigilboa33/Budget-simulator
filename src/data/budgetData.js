@@ -1,5 +1,5 @@
-export const TOTAL_BUDGET = 700;
-export const CURRENT_DEFICIT = 4.9;
+export const TOTAL_BUDGET = 673;
+export const CURRENT_DEFICIT = 2.5;
 export const GDP = 2420; // תחזית תמ"ג 2027
 
 // severity: "normal" | "warning" | "critical"
@@ -8,32 +8,65 @@ export const CATEGORIES = [
     id: "defense",
     label: "ביטחון וצבא",
     emoji: "🛡️",
-    color: "#ef4444",
-    current: 100,
-    min: 60,
-    max: 160,
+    color: "#ef4444",   // red
+    current: 123,
+    min: 70,
+    max: 200,
     insights: {
       decrease: [
-        { threshold: -5,  severity: "warning",  text: "חיזבאללה שלח פרחים. 5 מיליארד פחות לביטחון." },
-        { threshold: -20, severity: "critical", text: "20 מיליארד קיצוץ. כיפת ברזל? כיפת אלומיניום." },
-        { threshold: -35, severity: "critical", text: "קיצוץ של 35 מיליארד. נקווה שהאיראנים יהיו יותר נחמדים הפעם." },
+        { threshold: 5,  severity: "warning",  text: "חיזבאללה שלח פרחים. 5 מיליארד פחות לביטחון." },
+        { threshold: 15, severity: "critical", text: "15 מיליארד קיצוץ. כיפת ברזל? כיפת אלומיניום." },
+        { threshold: 30, severity: "critical", text: "30 מיליארד. נחמד. אולי ננסה שלום בשוק הפעם." },
+        { threshold: 50, severity: "critical", text: "חצי תקציב הביטחון. הזכרנו לך שאנחנו במזרח התיכון?" },
       ],
       increase: [
-        { threshold: 5,   severity: "normal",   text: "עוד 2 מיליון ימי מילואים. במשרד כבר נכנסים לכוננות." },
-        { threshold: 20,  severity: "normal",   text: "עוד 22 מטוסי F-35 ישר מהניילונים. בחיל האוויר בוכים מאושר." },
-        { threshold: 40,  severity: "warning",  text: "ישראל בדרך לטופ 5 בהוצאה ביטחונית ביחס לתמ\"ג." },
+        { threshold: 10, severity: "normal",  text: "10 מיליארד שקל נוספים. בתעשיות הביטחוניות חוגגים." },
+        { threshold: 30, severity: "warning", text: "30 מיליארד. ישראל תהיה ה-5 בעולם בהוצאה ביטחונית ביחס לתמ\"ג. בבואה." },
+        { threshold: 50, severity: "warning", text: "50 מיליארד תוספת. הצבא? עשיר. בתי ספר? לא כל כך." },
       ],
     },
     highlights: {
       increase: [
-        { threshold: 5,  items: ["מטוסי קרב נוספים", "כיפות ברזל נוספות", "חיל הים מחוזק"] },
-        { threshold: 20, items: ["ישראל בין 5 המעצמות הצבאיות", "יתרון טכנולוגי מוחץ", "הרתעה אמיתית"] },
-        { threshold: 40, items: ["הצבא החזק ביחס לגודלו בעולם", "ציוד מהמאה ה-22", "שום שכן לא ינסה"] },
+        { threshold: 10, items: ["מטוסי קרב נוספים", "כיפות ברזל נוספות", "חיל הים מחוזק"] },
+        { threshold: 30, items: ["ישראל בין 5 המעצמות הצבאיות", "יתרון טכנולוגי מוחץ", "הרתעה אמיתית"] },
+        { threshold: 50, items: ["הצבא החזק ביחס לגודלו בעולם", "ציוד מהמאה ה-22", "שום שכן לא ינסה"] },
       ],
       decrease: [
         { threshold: -5,  items: ["ציוד פחות מתוחזק", "אימונים מצומצמים", "מאגר מילואים קטן"] },
-        { threshold: -20, items: ["כיפת ברזל מצומצמת", "פחות כלי טיס פעילים", "גדודים קטנים יותר"] },
-        { threshold: -35, items: ["ירידה חדה בהרתעה", "תלות גבוהה בסיוע אמריקאי", "ביטחון דק מאוד"] },
+        { threshold: -15, items: ["כיפת ברזל מצומצמת", "פחות כלי טיס פעילים", "גדודים קטנים יותר"] },
+        { threshold: -30, items: ["ירידה חדה בהרתעה", "תלות גבוהה בסיוע אמריקאי", "ביטחון דק מאוד"] },
+        { threshold: -50, items: ["צבא שלד", "כמעט אין תקציב ציוד", "שמים תקווה בשלום"] },
+      ],
+    },
+  },
+  {
+    id: "national_security",
+    label: "ביטחון לאומי",
+    emoji: "🚔",
+    color: "#fb923c",   // orange (was dark-red, too similar to defense)
+    current: 27,
+    min: 15,
+    max: 45,
+    insights: {
+      decrease: [
+        { threshold: 3,  severity: "warning",  text: "שוטרים פחות. ועשרת אלפים אסירים — מי ישמור עליהם?" },
+        { threshold: 8,  severity: "critical", text: "שירות בתי הסוהר כבר עמוס מדי. קיצוץ? גד." },
+        { threshold: 12, severity: "critical", text: "ירידה חדה בביטחון הפנים. אולי הפשע יסדר את עצמו." },
+      ],
+      increase: [
+        { threshold: 5,  severity: "normal", text: "ניידות נוספות ברחוב. מישהו צריך לעבוד בלילה." },
+        { threshold: 12, severity: "normal", text: "שיפוץ בתי סוהר ושכר שוטרים הוגן. מאוחר, אבל יפה." },
+      ],
+    },
+    highlights: {
+      increase: [
+        { threshold: 5,  items: ["1,000 שוטרים חדשים", "ניידות מודרניות", "תגובה מהירה יותר"] },
+        { threshold: 12, items: ["שכר שוטרים מתוקן", "בתי סוהר משופצים", "מעצרים יעילים יותר"] },
+      ],
+      decrease: [
+        { threshold: -3,  items: ["פחות ניידות בשטח", "תגובה איטית יותר לאירועים", "עומס על הכוחות"] },
+        { threshold: -8,  items: ["קיצוץ בסוהרים", "עומס חריג בבתי הסוהר", "פגיעה בחקירות"] },
+        { threshold: -12, items: ["ביטחון פנים בשפל", "אסירים בצפיפות קיצונית", "פשיעה מזנקת"] },
       ],
     },
   },
@@ -43,65 +76,34 @@ export const CATEGORIES = [
     emoji: "📚",
     color: "#3b82f6",
     current: 127,
-    min: 73,
-    max: 200,
+    min: 80,
+    max: 210,
     insights: {
       decrease: [
-        { threshold: -5,  severity: "warning",  text: "5,000 מורים פחות. אבל הכיתה של 42 ממילא התרגלה לבד." },
-        { threshold: -20, severity: "critical", text: "ילדים לא צריכים ספרים. יש TikTok. הסטודנטים? עוזבים לברלין." },
-        { threshold: -35, severity: "critical", text: "מחלקות מחקר נסגרות. הדור הבא של החוקרים? אמריקאים." },
-        { threshold: -55, severity: "critical", text: "עוד קיצוץ בחינוך ומדינת ישראל תפסיק להפתיע. לגמרי." },
+        { threshold: 5,  severity: "warning",  text: "5,000 מורים פחות. אבל הכיתה של 42 ממילא התרגלה לבד." },
+        { threshold: 15, severity: "critical", text: "ילדים לא צריכים ספרים. יש TikTok." },
+        { threshold: 25, severity: "critical", text: "שכר לימוד עלה 25%. עוד 20,000 אקדמאים יעזבו לברלין." },
+        { threshold: 40, severity: "critical", text: "מחלקות מחקר נסגרות. הדור הבא של החוקרים? אמריקאים." },
       ],
       increase: [
-        { threshold: 5,   severity: "normal",   text: "5,000 מורים חדשים מצטרפים למערכת" },
-        { threshold: 15,  severity: "normal",   text: "יום לימודים ארוך ברוב בתי הספר היסודיים בישראל" },
-        { threshold: 30,  severity: "normal",   text: "30,000 מלגות לסטודנטים. המוחות הבורחים עוצרים את הטיסה." },
-        { threshold: 50,  severity: "normal",   text: "ישראל בטופ-20 אוניברסיטאות. אפשר לשיר הבאנו שלום." },
+        { threshold: 5,  severity: "normal", text: "5,000 מורים חדשים. הם יצאו להפגנה בעוד שנה, אבל בינתיים." },
+        { threshold: 15, severity: "normal", text: "יום לימודים ארוך לכל ישראל. ההורים בוכים משמחה." },
+        { threshold: 35, severity: "normal", text: "20,000 מלגות לסטודנטים. גם הם ישתמשו בהן כדי לעזוב." },
+        { threshold: 55, severity: "normal", text: "ישראל שומרת על פרופסורים בארץ. מושג חדש." },
       ],
     },
     highlights: {
       increase: [
         { threshold: 5,  items: ["10,000 מורים חדשים", "כיתות קטנות יותר", "ספרים לכל ילד"] },
-        { threshold: 20, items: ["יום לימודים ארוך לכולם", "שכר מורים הוגן", "מלגות לסטודנטים"] },
-        { threshold: 40, items: ["פרופסורים חוזרים מחו\"ל", "מוחות נשארים בארץ", "ישראל בטופ-20 אוניברסיטאות"] },
-        { threshold: 60, items: ["חינוך כמו פינלנד", "מחקר עולמי מובייל", "אקדמיה מצוינת"] },
+        { threshold: 15, items: ["יום לימודים ארוך לכולם", "שכר מורים הוגן", "מחשבים לכל כיתה"] },
+        { threshold: 35, items: ["20,000 מלגות לסטודנטים", "שכר לימוד מוזל", "מחקר ומפגשי הייטק"] },
+        { threshold: 55, items: ["פרופסורים חוזרים מחו\"ל", "ישראל בטופ-20 אוניברסיטאות", "מוחות נשארים בארץ"] },
       ],
       decrease: [
         { threshold: -5,  items: ["5,000 מורים פחות", "ספרים ישנים וקרועים", "כיתות צפופות יותר"] },
-        { threshold: -20, items: ["סגירת מסגרות חינוך", "שכר לימוד קפץ 25%", "TikTok מחליף ספרי לימוד"] },
-        { threshold: -35, items: ["מחלקות מחקר נסגרות", "חינוך איכותי רק לעשירים", "אקזודוס אקדמי"] },
-        { threshold: -55, items: ["ויתור על דור שלם", "בי\"ס ציבורי? מי מכיר", "החוקרים הבאים — אמריקאים"] },
-      ],
-    },
-  },
-  {
-    id: "welfare",
-    label: "ביטוח לאומי, רווחה ותעסוקה",
-    emoji: "👴",
-    color: "#f59e0b",
-    current: 88,
-    min: 55,
-    max: 130,
-    insights: {
-      decrease: [
-        { threshold: -5,  severity: "warning",  text: "קיצוץ בקצבאות. הנכים שלחו מכתב מחאה. לא ענו להם." },
-        { threshold: -15, severity: "critical", text: "ניפחת את הגירעון או קצצת לחלשים. בחרת בחלשים. קלאסי." },
-        { threshold: -25, severity: "critical", text: "שינוי מבני בזכאות לקצבאות. כלומר — פחות אנשים יקבלו." },
-      ],
-      increase: [
-        { threshold: 5,   severity: "normal",   text: "העלאת קצבת נכות ב-15%. לא מותרות — רק כיסוי קצת יותר טוב." },
-        { threshold: 20,  severity: "normal",   text: "פנסיית זקנה בסיסית לכל אזרח. אירופה עושה כבר 50 שנה." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 5,  items: ["קצבת נכות גבוהה ב-15%", "תמיכה לחד-הוריות", "מרכזי שיקום נוספים"] },
-        { threshold: 20, items: ["פנסיית זקנה בסיסית לכולם", "קצבת קיום אמיתית", "פנסיה כמו באירופה"] },
-      ],
-      decrease: [
-        { threshold: -5,  items: ["קיצוץ בקצבאות נכות", "פחות מרכזי שיקום", "הזקנים ישלמו את המחיר"] },
-        { threshold: -15, items: ["ביטול מענקים לחד-הוריות", "זקנים בעוני גלוי", "ויתור על השכבות החלשות"] },
-        { threshold: -25, items: ["שינוי מבני בזכאות", "עוני קיצוני מוסתר", "1.2 מיליון ללא רשת ביטחון"] },
+        { threshold: -15, items: ["סגירת מסגרות חינוך", "ילדים עם צרכים מיוחדים ללא תמיכה", "TikTok מחליף ספרי לימוד"] },
+        { threshold: -25, items: ["שכר לימוד קפץ 25%", "20,000 אקדמאים עוזבים", "ברלין שמחה"] },
+        { threshold: -40, items: ["מחלקות מחקר נסגרות", "חינוך איכותי רק לעשירים", "אקזודוס אקדמי"] },
       ],
     },
   },
@@ -111,389 +113,157 @@ export const CATEGORIES = [
     emoji: "🏥",
     color: "#10b981",
     current: 69,
-    min: 40,
-    max: 110,
+    min: 42,
+    max: 115,
     insights: {
       decrease: [
-        { threshold: -5,  severity: "warning",  text: "המתנה לרופא מומחה עלתה ל-5 חודשים. נסה אספירין." },
-        { threshold: -15, severity: "critical", text: "20 מחלקות אשפוז נסגרות. אל דאגה — פרטי רק 3,000 ₪ לפגישה." },
-        { threshold: -25, severity: "critical", text: "ישראל חוזרת לרמת בריאות של שנות ה-90. נוסטלגיה אמיתית." },
+        { threshold: 5,  severity: "warning",  text: "המתנה לרופא מומחה עלתה ל-5 חודשים. נסה אספירין." },
+        { threshold: 12, severity: "critical", text: "20 מחלקות אשפוז נסגרות. אל דאגה — פרטי רק 3,000 ₪ לפגישה." },
+        { threshold: 20, severity: "critical", text: "ישראל חוזרת לרמת בריאות של שנות ה-90. נוסטלגיה אמיתית." },
+        { threshold: 27, severity: "critical", text: "אחרי הקיצוץ הזה, ה-IMF מציע לך לבדוק ביטוח רפואי פרטי." },
       ],
       increase: [
-        { threshold: 5,   severity: "normal",   text: "1,200 מיטות אשפוז חדשות. לאנשים שיהיו בהן." },
-        { threshold: 15,  severity: "normal",   text: "רופא משפחה שמגיע תוך שבוע. מושג חדשני לישראל." },
-        { threshold: 25,  severity: "normal",   text: "ממוצע OECD בבריאות. אחרי 40 שנה של פיגור." },
+        { threshold: 5,  severity: "normal", text: "1,200 מיטות אשפוז חדשות. לאנשים שיהיו בהן." },
+        { threshold: 15, severity: "normal", text: "רופא משפחה שמגיע תוך שבוע. מושג חדשני לישראל." },
+        { threshold: 30, severity: "normal", text: "ממוצע OECD בבריאות. אחרי 40 שנה של פיגור." },
       ],
     },
     highlights: {
       increase: [
         { threshold: 5,  items: ["1,200 מיטות אשפוז חדשות", "תור לרופא תוך שבוע", "ציוד רפואי מתקדם"] },
         { threshold: 15, items: ["רפואת שיניים בסל הבריאות", "פסיכיאטריה נגישה לכולם", "רופא משפחה אמיתי"] },
-        { threshold: 25, items: ["ממוצע OECD — לראשונה", "מיטות ICU כמו גרמניה", "המתנה פחות מחודש"] },
+        { threshold: 30, items: ["ממוצע OECD — לראשונה", "מיטות ICU כמו גרמניה", "המתנה פחות מחודש"] },
       ],
       decrease: [
         { threshold: -5,  items: ["תור לרופא מומחה — 5 חודשים", "פחות תרופות בסל", "קופות חולות חלשות"] },
-        { threshold: -15, items: ["20 מחלקות אשפוז נסגרות", "רופאים עוזבים לחו\"ל", "ביטוח פרטי הפך הכרחי"] },
-        { threshold: -25, items: ["חדרי מיון עמוסים ב-300%", "תמותה הניתנת למניעה עולה", "ישראל 1990"] },
+        { threshold: -12, items: ["20 מחלקות אשפוז נסגרות", "רופאים עוזבים לחו\"ל", "ביטוח פרטי הפך הכרחי"] },
+        { threshold: -20, items: ["חדרי מיון עמוסים ב-300%", "תמותה הניתנת למניעה עולה", "ישראל 1990"] },
+        { threshold: -27, items: ["משבר בריאות לאומי", "הצלת חיים בהגרלה", "CNN מדווח מישראל"] },
       ],
     },
   },
   {
-    id: "transport_subsidy",
-    label: "סבסוד תחבורה ציבורית ודיור",
+    id: "welfare",
+    label: "רווחה ועוני",
+    emoji: "👴",
+    color: "#f59e0b",
+    current: 95,
+    min: 60,
+    max: 140,
+    insights: {
+      decrease: [
+        { threshold: 5,  severity: "warning",  text: "קיצוץ בקצבאות. הנכים שלחו מכתב מחאה. לא ענו להם." },
+        { threshold: 15, severity: "critical", text: "ניפחת את הגירעון או קצצת לחלשים. בחרת בחלשים. קלאסי." },
+        { threshold: 25, severity: "critical", text: "שינוי מבני בזכאות לקצבאות. כלומר — פחות אנשים יקבלו." },
+        { threshold: 35, severity: "critical", text: "עניים, ניצולי שואה, עולים — כולם ספגו. מי אחר נשאר?" },
+      ],
+      increase: [
+        { threshold: 5,  severity: "normal", text: "העלאת קצבת נכות ב-15%. לא מותרות — רק כיסוי קצת יותר טוב." },
+        { threshold: 18, severity: "normal", text: "פנסיית זקנה בסיסית לכל אזרח. אירופה עושה כבר 50 שנה." },
+        { threshold: 30, severity: "normal", text: "הכנסה בסיסית מובטחת. שמאל? ימין? לאנשים זה לא משנה." },
+      ],
+    },
+    highlights: {
+      increase: [
+        { threshold: 5,  items: ["קצבת נכות גבוהה ב-15%", "תמיכה לחד-הוריות", "מרכזי שיקום נוספים"] },
+        { threshold: 18, items: ["פנסיית זקנה בסיסית לכולם", "קצבת קיום אמיתית", "ניצולי שואה מטופלים"] },
+        { threshold: 30, items: ["הכנסה בסיסית מובטחת", "אוכל לכל ילד", "עוני בחצי ממה שיש היום"] },
+      ],
+      decrease: [
+        { threshold: -5,  items: ["קיצוץ בקצבאות נכות", "פחות מרכזי שיקום", "הזקנים ישלמו את המחיר"] },
+        { threshold: -15, items: ["ביטול מענקים לחד-הוריות", "עולים ללא סיוע קליטה", "עוני גלוי יותר"] },
+        { threshold: -25, items: ["שינוי מבני בזכאות", "ניצולי שואה ללא כיסוי", "1.5 מיליון ללא רשת ביטחון"] },
+        { threshold: -35, items: ["קריסת מערכת הרווחה", "עוני קיצוני מוסתר", "ויתור על השכבות החלשות"] },
+      ],
+    },
+  },
+  {
+    id: "transit_housing",
+    label: "סבסוד תחבורה ציבורית וסיוע בדיור",
     emoji: "🚌",
-    color: "#14b8a6",
+    color: "#0891b2",
     current: 22,
     min: 10,
     max: 40,
     insights: {
       decrease: [
-        { threshold: -4,  severity: "warning",  text: "כרטיס חודשי קפץ ב-40%. הנסיעה לעבודה הפכה מיותרת." },
-        { threshold: -8,  severity: "critical", text: "ביטול סבסוד שכר דירה. 200,000 משפחות בחיפוש דירה." },
-        { threshold: -12, severity: "critical", text: "תחבורה ציבורית ללא סבסוד. רק מכוניות. רק פקק." },
+        { threshold: 3,  severity: "warning",  text: "המחיר לנסיעה עלה. שכר הדירה גם. שכר המינימום לא." },
+        { threshold: 8,  severity: "critical", text: "אוטובוסים מתייקרים, הסיוע בשכר דירה נעלם. תל אביב לעשירים בלבד." },
+        { threshold: 12, severity: "critical", text: "תחבורה ציבורית כמעט לא כדאית כלכלית. כולם חוזרים לפקק." },
       ],
       increase: [
-        { threshold: 4,   severity: "normal",   text: "כרטיס חודשי זול יותר ב-30%. אנשים מוכנים להפסיק לנהוג." },
-        { threshold: 10,  severity: "normal",   text: "סבסוד שכר דירה לזוגות צעירים. ת\"א אולי בת-השגה שוב." },
+        { threshold: 5,  severity: "normal", text: "כרטיסיות מסובסדות. סטודנטים שמחים. לזמן קצר." },
+        { threshold: 14, severity: "normal", text: "אוטובוסים בר-השגה וסיוע בשכר דירה לצעירים. מהלך חברתי." },
       ],
     },
     highlights: {
       increase: [
-        { threshold: 4,  items: ["תחבורה ציבורית בהישג יד", "פחות מכוניות על הכביש", "סבסוד לאוכלוסיות חלשות"] },
-        { threshold: 10, items: ["שכר דירה בר-השגה", "זוגות נשארים בערים הגדולות", "פחות לחץ כלכלי"] },
+        { threshold: 5,  items: ["כרטיסיות מסובסדות", "הנחה לסטודנטים ועובדים", "יותר נסיעות בתחבורה ציבורית"] },
+        { threshold: 14, items: ["תחבורה ציבורית זולה לכולם", "סיוע בשכר דירה לצעירים", "פחות פער חברתי"] },
       ],
       decrease: [
-        { threshold: -4,  items: ["כרטיס חודשי יקר ב-40%", "פחות נוסעים בתחבורה", "מכוניות נוספות בכביש"] },
-        { threshold: -8,  items: ["ביטול סבסוד שכ\"ד", "משפחות עוזבות ת\"א", "פנאי כלכלי? כמעט אפס"] },
-        { threshold: -12, items: ["תחבורה ציבורית רק לעשירים", "שכר דירה בשיא", "ת\"א = לוס אנג'לס"] },
+        { threshold: -3,  items: ["תעריפי תחבורה עולים", "הסיוע בדיור מצטמצם", "עלות מחיה עולה"] },
+        { threshold: -8,  items: ["אוטובוסים יקרים מדי", "צעירים לא יכולים להרשות דיור", "פיזור ערים מוגבר"] },
+        { threshold: -12, items: ["תחבורה ציבורית רק לעניים שאין להם ברירה", "משבר דיור מחמיר", "פינוי-בינוי — לעשירים"] },
       ],
     },
   },
   {
-    id: "holocaust_survivors",
-    label: "ניצולי שואה",
-    emoji: "🕍",
-    color: "#a855f7",
-    current: 5,
-    min: 3,
-    max: 9,
-    insights: {
-      decrease: [
-        { threshold: -1,  severity: "warning",  text: "קיצוץ בתמיכה לניצולי שואה. יש עוד זמן לתקן את זה?" },
-        { threshold: -2,  severity: "critical", text: "הניצולים הזקנים והחולים ישלמו את מחיר הקיצוץ. ממש הם." },
-      ],
-      increase: [
-        { threshold: 1,   severity: "normal",   text: "תוספת כספית לניצולים חיים. כמה שנים נותרו — כדאי לנצל." },
-        { threshold: 3,   severity: "normal",   text: "כל ניצול יקבל ליווי אישי וסיוע בשכר דירה. מאוחר מדי? לא בטוח." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 1, items: ["קצבה חודשית גבוהה יותר", "טיפול רפואי בבית", "סיוע במחיית יום-יום"] },
-        { threshold: 3, items: ["ליווי אישי לכל ניצול", "שיפוץ דירות", "מרכזי יום מורחבים"] },
-      ],
-      decrease: [
-        { threshold: -1, items: ["קיצוץ בקצבאות ניצולים", "פחות שירותי בריאות", "ניצולים בבדידות"] },
-        { threshold: -2, items: ["ביטול ליווי אישי", "מרכזי יום נסגרים", "ניצולים ללא מענה"] },
-      ],
-    },
-  },
-  {
-    id: "immigration",
-    label: "עולים חדשים",
-    emoji: "✈️",
-    color: "#06b6d4",
-    current: 2,
-    min: 1,
-    max: 5,
-    insights: {
-      decrease: [
-        { threshold: -0.5, severity: "warning",  text: "פחות תמיכה לעולים חדשים. אולי ייחשבו פעמיים לפני שיעלו." },
-        { threshold: -1,   severity: "critical", text: "מרכזי קליטה נסגרים. עולים ישנים שנים ראשונות ברחוב — ממש." },
-      ],
-      increase: [
-        { threshold: 1,   severity: "normal",   text: "שיפור קורסי עברית ותמיכה בתעסוקה. עולים משתלבים מהר יותר." },
-        { threshold: 2,   severity: "normal",   text: "ישראל מושכת מומחים מחו\"ל שוב. יש לאן לחזור." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 1, items: ["קורסי עברית חינמיים", "סיוע בדיור לעולים", "תמיכה בתעסוקה"] },
-        { threshold: 2, items: ["ישראל יעד אטרקטיבי", "מומחים חוזרים מחו\"ל", "קהילות עולים מבוססות"] },
-      ],
-      decrease: [
-        { threshold: -0.5, items: ["מרכזי קליטה עמוסים", "פחות קורסי שפה", "עולים מתקשים להשתלב"] },
-        { threshold: -1,   items: ["מרכזי קליטה נסגרים", "עולים ללא תמיכה", "ירידה בעלייה לישראל"] },
-      ],
-    },
-  },
-  {
-    id: "national_security",
-    label: "משטרה ובתי כלא",
-    emoji: "👮",
-    color: "#dc2626",
-    current: 27,
-    min: 15,
-    max: 45,
-    insights: {
-      decrease: [
-        { threshold: -4,  severity: "warning",  text: "פחות שוטרים ברחוב. הפשע המאורגן ישמח לשמוע." },
-        { threshold: -8,  severity: "critical", text: "ביטול יחידות מיוחדות. הפשע כבר מחפש משרדים." },
-        { threshold: -12, severity: "critical", text: "ירידה חדה באכיפת חוק. הפשע המאורגן שולט על כבישים." },
-      ],
-      increase: [
-        { threshold: 4,   severity: "normal",   text: "3,000 שוטרים חדשים. עוד גם בלשים מומחים." },
-        { threshold: 8,   severity: "normal",   text: "יחידות סייבר חדשות. הפשע הדיגיטלי מודאג." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 4,  items: ["3,000 שוטרים נוספים", "יותר ניידות בשטח", "ירידה בפשיעה"] },
-        { threshold: 8,  items: ["יחידות סייבר מורחבות", "מאבק בפשע מאורגן", "מערכת מעצרים מתקדמת"] },
-      ],
-      decrease: [
-        { threshold: -4,  items: ["פחות שוטרים בשטח", "זמן תגובה ארוך יותר", "פשיעה עולה"] },
-        { threshold: -8,  items: ["יחידות מיוחדות מצטמצמות", "פשע מאורגן מתחזק", "אכיפה חלשה"] },
-        { threshold: -12, items: ["אובדן שליטה על כבישים", "הגנה אזרחית מינימלית", "ישראל 1948"] },
-      ],
-    },
-  },
-  {
-    id: "intelligence",
-    label: "מוסד ושב\"כ",
-    emoji: "🕵️",
-    color: "#7c3aed",
-    current: 19,
-    min: 10,
-    max: 32,
-    insights: {
-      decrease: [
-        { threshold: -3,  severity: "warning",  text: "קיצוץ במודיעין. מישהו יצטרך לשאול את איראן בעצמו." },
-        { threshold: -6,  severity: "critical", text: "מקורות מודיעיניים מצטמצמים. הפתעות אסטרטגיות בדרך." },
-        { threshold: -9,  severity: "critical", text: "ישראל עיוורת. כמה זמן עד להפתעה הבאה?" },
-      ],
-      increase: [
-        { threshold: 3,   severity: "normal",   text: "קיבולת מודיעינית גדלה. פחות הפתעות מאיראן." },
-        { threshold: 6,   severity: "normal",   text: "יחידות סייבר מתקדמות. ישראל שולטת בדיגיטל הביטחוני." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 3,  items: ["מקורות מודיעין מורחבים", "יחידות סייבר חדשות", "הרתעה נסתרת"] },
-        { threshold: 6,  items: ["שליטה מודיעינית אזורית", "מניעת איומים מוקדמת", "ישראל בטוחה יותר"] },
-      ],
-      decrease: [
-        { threshold: -3,  items: ["מקורות מצטמצמים", "כיסוי מודיעיני חלש", "הפתעות אסטרטגיות"] },
-        { threshold: -6,  items: ["ישראל חשופה לאיומים", "פחות ביצועי סייבר", "עיוורון אסטרטגי"] },
-        { threshold: -9,  items: ["מודיעין בשפל", "תלות בבעלי ברית", "7 באוקטובר הבא?"] },
-      ],
-    },
-  },
-  {
-    id: "veterans",
-    label: "חיילים משוחררים",
-    emoji: "🎖️",
-    color: "#b45309",
-    current: 4,
-    min: 2,
-    max: 8,
-    insights: {
-      decrease: [
-        { threshold: -1,  severity: "warning",  text: "חיילים משוחררים עם פחות תמיכה. מי ירצה לשרת בצבא?" },
-        { threshold: -2,  severity: "critical", text: "ביטול תמיכה נפשית לחיילים. PTSD לא נעלם לבד." },
-      ],
-      increase: [
-        { threshold: 1,   severity: "normal",   text: "מענקי שחרור גבוהים יותר. הצבא מתחיל לשלם מחיר הוגן." },
-        { threshold: 3,   severity: "normal",   text: "מרכזי שיקום נפשי לחיילים משוחררים. סוף סוף." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 1, items: ["מענק שחרור גבוה יותר", "תמיכה בלימודים", "קליטה מהירה לשוק העבודה"] },
-        { threshold: 3, items: ["מרכזי שיקום נפשי", "ליווי אישי לחיילים", "ישראל מכבדת את שירותם"] },
-      ],
-      decrease: [
-        { threshold: -1, items: ["מענק שחרור נמוך", "פחות תמיכה נפשית", "חיילים נופלים בין הכיסאות"] },
-        { threshold: -2, items: ["PTSD ללא טיפול", "חיילים מתקשים לשוב", "ירידה במוטיבציה לשירות"] },
-      ],
-    },
-  },
-  {
-    id: "otef",
-    label: "עוטף עזה וקצת מעבר",
+    id: "rehabilitation",
+    label: "שיקום חבל תקומה והצפון",
     emoji: "🏗️",
-    color: "#f97316",
-    current: 17,
-    min: 5,
-    max: 35,
+    color: "#e879f9",   // fuchsia (was brown, too similar to welfare amber)
+    current: 33,
+    min: 15,
+    max: 65,
     insights: {
       decrease: [
-        { threshold: -3,  severity: "warning",  text: "עיכוב בשיקום. עשרות אלפי תושבים עדיין לא חזרו לביתם." },
-        { threshold: -8,  severity: "critical", text: "עיכוב של שנתיים בשיקום. הכפרים יישארו ריקים קצת יותר." },
-        { threshold: -12, severity: "critical", text: "שיקום העוטף על הנייר. בפועל — אפס." },
+        { threshold: 5,  severity: "warning",  text: "תושבי עוטף עזה ממשיכים לחכות. מה חדש." },
+        { threshold: 15, severity: "critical", text: "הבנייה מחדש מואטת. תקומה שאינה קמה." },
+        { threshold: 18, severity: "critical", text: "השיקום הופך לחלום. רבים לא יחזרו." },
       ],
       increase: [
-        { threshold: 3,   severity: "normal",   text: "אלפי יחידות דיור נוספות בשיקום. תושבים מתחילים לחזור." },
-        { threshold: 8,   severity: "normal",   text: "כל כפרי עוטף עזה ישוקמו עד 2027. מהיר ממה שתכננו." },
+        { threshold: 10, severity: "normal", text: "בנייה מחדש מואצת. 10,000 משפחות יוכלו לחזור הביתה." },
+        { threshold: 25, severity: "normal", text: "תקומה אמיתית. גם הצפון וגם עוטף רואים עתיד." },
       ],
     },
     highlights: {
       increase: [
-        { threshold: 3,  items: ["אלפי יחידות דיור בהקמה", "תושבים חוזרים לכפרים", "בניית קהילות מחדש"] },
-        { threshold: 8,  items: ["כל כפרי העוטף מוחזרים", "פארקי תעשייה חדשים", "ישראל בונה ממגף"] },
+        { threshold: 10, items: ["10,000 משפחות חוזרות הביתה", "בנייה מחדש מואצת", "שירותים מתוחזקים"] },
+        { threshold: 25, items: ["שיקום מלא של הצפון ועוטף", "תשתיות חדשות", "קהילות חזקות מחדש"] },
       ],
       decrease: [
-        { threshold: -3,  items: ["עיכוב בשיקום הכפרים", "תושבים בדירות זמניות", "ממשיכים לחכות"] },
-        { threshold: -8,  items: ["כפרי עוטף עדיין ריקים", "ירידה בביטחון האישי", "תושבים לא חוזרים"] },
-        { threshold: -12, items: ["עוטף ללא שיקום", "ויתור על הפריפריה", "ממשלה שבגדה בתושבים"] },
+        { threshold: -5,  items: ["עיכוב בחזרת המפונים", "בנייה איטית יותר", "קהילות ממתינות"] },
+        { threshold: -15, items: ["שיקום חלקי בלבד", "תושבים שנשארו מחוץ לבתיהם", "אזורים נטושים"] },
+        { threshold: -18, items: ["ויתור על שיקום מלא", "הגירה פנימית גוברת", "חבל תקומה — ללא תקומה"] },
       ],
     },
   },
   {
-    id: "north",
-    label: "פיתוח הצפון",
-    emoji: "🌿",
-    color: "#22c55e",
-    current: 15,
-    min: 5,
-    max: 30,
-    insights: {
-      decrease: [
-        { threshold: -3,  severity: "warning",  text: "פחות השקעה בצפון. הגליל ממשיך להרגיש שכוח." },
-        { threshold: -7,  severity: "critical", text: "פיתוח הצפון קפא. התושבים עוזבים לתל אביב." },
-        { threshold: -10, severity: "critical", text: "הצפון בשפל. ירידה דמוגרפית. פריפריה תמיד תשלם." },
-      ],
-      increase: [
-        { threshold: 3,   severity: "normal",   text: "פרויקטי פיתוח בגליל. יש כבר על מי לסמוך." },
-        { threshold: 8,   severity: "normal",   text: "פיתוח הצפון קפץ 10 שנה קדימה. הגליל הפך מוקד השקעה לאומי." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 3,  items: ["פארק תעשייה בגליל", "כבישים ותשתיות חדשות", "ישובים מתחזקים"] },
-        { threshold: 8,  items: ["קפיצת מדרגה בפריפריה", "ישובים חדשים בגליל", "מודל השקעה לאומי"] },
-      ],
-      decrease: [
-        { threshold: -3,  items: ["פחות פרויקטי פיתוח", "ירידה בשירותים ציבוריים", "צפון מוחלש"] },
-        { threshold: -7,  items: ["תושבים עוזבים לת\"א", "ירידה דמוגרפית בגליל", "ישובים בשקיעה"] },
-        { threshold: -10, items: ["הצפון בשפל היסטורי", "ויתור על הפריפריה", "אסון דמוגרפי"] },
-      ],
-    },
-  },
-  {
-    id: "economy",
-    label: "משרד הכלכלה והתעשייה",
-    emoji: "🏭",
-    color: "#64748b",
-    current: 5,
-    min: 2,
-    max: 12,
-    insights: {
-      decrease: [
-        { threshold: -1,  severity: "warning",  text: "פחות תמיכה לעסקים קטנים. הקיוסק שלמה נסגר. שוב." },
-        { threshold: -2,  severity: "critical", text: "תמיכה בתעשייה בירידה. חברות מפתחות מוצרים בחו\"ל." },
-        { threshold: -3,  severity: "critical", text: "ישראל מאבדת יתרון תחרותי בתעשייה. סין שמחה." },
-      ],
-      increase: [
-        { threshold: 2,   severity: "normal",   text: "תמריצים לעסקים קטנים. 5,000 עסקים חדשים בשנה." },
-        { threshold: 5,   severity: "normal",   text: "ישראל בונה מרכזי תעשייה. הייצור חוזר לארץ." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 2, items: ["תמיכה לעסקים קטנים", "הפחתת רגולציה", "יצירת משרות"] },
-        { threshold: 5, items: ["מרכזי תעשייה חדשים", "ייצור מקומי גדל", "ירידה בייבוא"] },
-      ],
-      decrease: [
-        { threshold: -1, items: ["עסקים קטנים נסגרים", "פחות יצירת משרות", "תעשייה מצטמצמת"] },
-        { threshold: -2, items: ["חברות עוברות לחו\"ל", "אובדן יתרון תחרותי", "מיתון תעשייתי"] },
-        { threshold: -3, items: ["ישראל מאבדת מוניטין", "ייבוא מחליף ייצור מקומי", "אבטלה תעשייתית"] },
-      ],
-    },
-  },
-  {
-    id: "agriculture",
-    label: "משרד החקלאות",
-    emoji: "🌾",
-    color: "#84cc16",
-    current: 2,
-    min: 1,
-    max: 5,
-    insights: {
-      decrease: [
-        { threshold: -0.5, severity: "warning",  text: "פחות תמיכה לחקלאים. הגבינה הצפתית הפכה יוקרה." },
-        { threshold: -1,   severity: "critical", text: "חקלאות ישראלית בשקיעה. מיובא הכל. גם הטחינה." },
-      ],
-      increase: [
-        { threshold: 0.5,  severity: "normal",   text: "תמיכה בחקלאים קטנים. יש עוד עגבניות ישראליות בשוק." },
-        { threshold: 2,    severity: "normal",   text: "ישראל מחזקת את ביטחון המזון. לא תלויים בטורקיה." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 0.5, items: ["תמיכה בחקלאים קטנים", "טכנולוגיה חקלאית מתקדמת", "ייצוא חקלאי גדל"] },
-        { threshold: 2,   items: ["ביטחון מזון לאומי", "מוצרים ישראליים בשוק", "חקלאות כלכלית"] },
-      ],
-      decrease: [
-        { threshold: -0.5, items: ["חקלאים קטנים נסגרים", "מחירי מזון עולים", "ייבוא גובר"] },
-        { threshold: -1,   items: ["חקלאות ישראלית בשקיעה", "תלות גבוהה בייבוא", "מחירי מזון בשיא"] },
-      ],
-    },
-  },
-  {
-    id: "environment",
-    label: "משרדי הגנת הסביבה, תיירות ותקשורת",
-    emoji: "🌍",
-    color: "#0ea5e9",
-    current: 1,
-    min: 0.5,
-    max: 3,
-    insights: {
-      decrease: [
-        { threshold: -0.3, severity: "warning",  text: "פחות תקציב לסביבה. הים התיכון כבר לא כזה תיכוני." },
-        { threshold: -0.5, severity: "critical", text: "תיירות? השמועה שישראל מזהמת לא עוזרת." },
-      ],
-      increase: [
-        { threshold: 0.3,  severity: "normal",   text: "נשמרים שמורות טבע חדשות. הדרסה הגדולה הצילה." },
-        { threshold: 1,    severity: "normal",   text: "ישראל מגדילה תיירות ירוקה. 3 מיליון תיירים יותר." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 0.3, items: ["שמורות טבע מוגנות", "תיירות ירוקה", "מדיניות סביבתית"] },
-        { threshold: 1,   items: ["ישראל יעד תיירות עולמי", "תשתיות תיירות חדשות", "הכנסות מתיירות"] },
-      ],
-      decrease: [
-        { threshold: -0.3, items: ["זיהום סביבתי גדל", "שמורות מוזנחות", "תיירות פוחתת"] },
-        { threshold: -0.5, items: ["ישראל מאחר ביעדי אקלים", "נזק לים התיכון", "תיירים בורחים"] },
-      ],
-    },
-  },
-  {
-    id: "transport",
-    label: "משרד התחבורה והבטיחות בדרכים",
+    id: "infrastructure",
+    label: "תחבורה ותשתיות",
     emoji: "🚇",
     color: "#8b5cf6",
-    current: 34,
-    min: 15,
-    max: 60,
+    current: 40,
+    min: 20,
+    max: 80,
     insights: {
       decrease: [
-        { threshold: -5,  severity: "warning",  text: "המטרו מתעכב 3 שנים. תל אביב תמשיך להיות פקק בינלאומי." },
-        { threshold: -12, severity: "critical", text: "הקפאת רכבת קלה. הנסיעה מאשדוד לת\"א תישאר 3 שעות." },
-        { threshold: -20, severity: "critical", text: "ישראל תחתית OECD בתחבורה ציבורית. כמו תמיד. לנצח." },
+        { threshold: 5,  severity: "warning",  text: "המטרו מתעכב 3 שנים. תל אביב תמשיך להיות פקק בינלאומי." },
+        { threshold: 12, severity: "critical", text: "הקפאת רכבת קלה. הנסיעה מאשדוד לת\"א תישאר 3 שעות." },
+        { threshold: 20, severity: "critical", text: "ישראל תחתית OECD בתחבורה ציבורית. כמו תמיד. לנצח." },
       ],
       increase: [
-        { threshold: 5,   severity: "normal",   text: "עוד 25 ק\"מ של רכבת קלה. אולי תצליח לאסוף את הילד בזמן!" },
-        { threshold: 12,  severity: "normal",   text: "חלק מקווי המטרו בגוש דן מוקדמים בשנתיים." },
-        { threshold: 20,  severity: "normal",   text: "רכבת מהירה ת\"א–ירושלים ב-30 דק'. ציביליזציה!" },
+        { threshold: 10, severity: "normal", text: "מטרו מוקדם בשנתיים. אולי." },
+        { threshold: 25, severity: "normal", text: "רכבת מהירה ת\"א–ירושלים ב-30 דק. ציביליזציה!" },
+        { threshold: 40, severity: "normal", text: "ישראל תגיע לממוצע אירופה בתחבורה. בערך ב-2040." },
       ],
     },
     highlights: {
       increase: [
-        { threshold: 5,  items: ["מטרו ת\"א מוקדם בשנתיים", "רכבת קלה חדשה", "פחות פקק בכבישים"] },
-        { threshold: 12, items: ["רכבת ת\"א–ירושלים ב-30 דק'", "מטרו חיפה מתחיל", "אוטובוסים חשמליים"] },
-        { threshold: 20, items: ["ממוצע אירופה בתחבורה", "פקק? מושג של העבר", "תחבורה ציבורית 24/7"] },
+        { threshold: 10, items: ["מטרו ת\"א מוקדם בשנתיים", "רכבת קלה חדשה", "פחות פקק בכבישים"] },
+        { threshold: 25, items: ["רכבת ת\"א–ירושלים ב-30 דק'", "מטרו חיפה מתחיל", "אוטובוסים חשמליים"] },
+        { threshold: 40, items: ["ממוצע אירופה בתחבורה", "פקק? מושג של העבר", "תחבורה ציבורית 24/7"] },
       ],
       decrease: [
         { threshold: -5,  items: ["מטרו מתעכב 3 שנים", "תחבורה ציבורית מצומצמת", "עוד תחנות נסגרות"] },
@@ -503,162 +273,134 @@ export const CATEGORIES = [
     },
   },
   {
-    id: "housing",
-    label: "משרד הבינוי והשיכון",
-    emoji: "🏠",
-    color: "#f43f5e",
-    current: 5,
-    min: 2,
-    max: 15,
+    id: "economy",
+    label: "חקלאות, תיירות ותעשיה",
+    emoji: "🏭",
+    color: "#a3e635",   // lime (was dark-green, too similar to health emerald)
+    current: 8,
+    min: 4,
+    max: 18,
     insights: {
       decrease: [
-        { threshold: -1,  severity: "warning",  text: "פחות יחידות דיור ציבוריות. השכירות עלתה שוב. כמובן." },
-        { threshold: -2,  severity: "critical", text: "הפסקת בנייה ציבורית. הזוגות הצעירים יחכו עוד 10 שנה לדירה." },
-        { threshold: -3,  severity: "critical", text: "ישראל מזניחה דיור ציבורי. כולם שוכרים מיזמים פרטיים. במחיר שוק." },
+        { threshold: 2, severity: "warning",  text: "חקלאים מוותרים. ירקות מיובאים. ישראל? אה כן." },
+        { threshold: 4, severity: "critical", text: "תיירות ותעשייה ישלמו. הצמיחה — לא." },
       ],
       increase: [
-        { threshold: 2,   severity: "normal",   text: "10,000 יחידות דיור ציבוריות חדשות. סוף לרשימות ההמתנה?" },
-        { threshold: 5,   severity: "normal",   text: "שכונות שלמות בנויות. מחיר למשתכן מקבל תנופה אמיתית." },
-        { threshold: 8,   severity: "normal",   text: "מחירי הדיור מתחילים לרדת. הזוגות הצעירים לא מאמינים." },
+        { threshold: 3, severity: "normal", text: "תמיכה בחקלאות ותעשייה. אפשר לגדל קיווי בנגב." },
+        { threshold: 8, severity: "normal", text: "ישראל מושכת תיירים ומפעלים. השקל מרוצה." },
       ],
     },
     highlights: {
       increase: [
-        { threshold: 2,  items: ["10,000 דירות ציבוריות", "שכונות מעורבות", "מחיר למשתכן מוגדל"] },
-        { threshold: 5,  items: ["מחירי דיור בירידה", "דירות נגישות לזוגות צעירים", "תשתיות שכונתיות"] },
-        { threshold: 8,  items: ["מהפכת הדיור", "ת\"א בת-השגה", "ישראל ב-OECD בנגישות דיור"] },
+        { threshold: 3, items: ["תמיכה בחקלאים", "תיירות מוזלת לישראלים", "מפעלים שנשארים בארץ"] },
+        { threshold: 8, items: ["ישראל יעד תיירותי מוביל", "תעשייה מקומית חזקה", "עצמאות מזון גבוהה"] },
       ],
       decrease: [
-        { threshold: -1, items: ["פחות יחידות דיור ציבוריות", "שכירות עולה", "זוגות צעירים יוצאים"] },
-        { threshold: -2, items: ["הקפאת בנייה ציבורית", "רשימות המתנה ארוכות", "מחירי דיור בשיא"] },
-        { threshold: -3, items: ["דיור ציבורי כמעט ולא קיים", "ישראל = שוק פרטי מלא", "רק עשירים קונים דירה"] },
+        { threshold: -2, items: ["חקלאים זורקים את המטע", "תיירים פחות — הכנסות פחות", "ייבוא מחליף תוצרת מקומית"] },
+        { threshold: -4, items: ["תעשייה מקומית נחלשת", "חקלאות בשפל", "תלות גוברת בייבוא"] },
       ],
     },
   },
   {
-    id: "energy",
-    label: "תשתיות אנרגיה ומים",
-    emoji: "⚡",
-    color: "#eab308",
-    current: 2,
-    min: 1,
-    max: 6,
-    insights: {
-      decrease: [
-        { threshold: -0.5, severity: "warning",  text: "פחות השקעה בתשתיות מים. בצורת? מי חשב על זה?" },
-        { threshold: -1,   severity: "critical", text: "תשתיות אנרגיה ישנות. הפסקות חשמל הפכו שגרה." },
-      ],
-      increase: [
-        { threshold: 0.5,  severity: "normal",   text: "עדכון תשתיות חשמל. הפסקות חשמל פוחתות בצורה ניכרת." },
-        { threshold: 2,    severity: "normal",   text: "ישראל מובילה בסולרי. 40% מהאנרגיה מתחדשת עד 2027." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 0.5, items: ["תשתיות חשמל מעודכנות", "מים בטוחים לשתייה", "אנרגיה זולה יותר"] },
-        { threshold: 2,   items: ["40% אנרגיה מתחדשת", "עצמאות אנרגטית", "ישראל ירוקה יותר"] },
-      ],
-      decrease: [
-        { threshold: -0.5, items: ["תשתיות ישנות ומתדרדרות", "הפסקות חשמל גדלות", "איכות מים יורדת"] },
-        { threshold: -1,   items: ["משבר תשתיות אנרגיה", "תלות בדלק מיובא", "עלויות חשמל מזנקות"] },
-      ],
-    },
-  },
-  {
-    id: "justice",
-    label: "משרד המשפטים",
-    emoji: "⚖️",
-    color: "#9ca3af",
-    current: 5,
-    min: 2,
-    max: 10,
-    insights: {
-      decrease: [
-        { threshold: -1,  severity: "warning",  text: "פחות שופטים. תיקים מחכים 6 שנים. לא לגמרי צדק." },
-        { threshold: -2,  severity: "critical", text: "מערכת המשפט עמוסה ב-300%. הנאשמים מחכים שנים לדיון." },
-        { threshold: -3,  severity: "critical", text: "שלטון החוק נחלש. מי שיש לו כסף שוכר עורך דין. האחרים — מחכים." },
-      ],
-      increase: [
-        { threshold: 1,   severity: "normal",   text: "200 שופטים חדשים. תיקים מגיעים לפסיקה תוך שנתיים." },
-        { threshold: 3,   severity: "normal",   text: "דיגיטציה של בתי המשפט. חצי מהתיקים מסתיימים תוך שנה." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 1, items: ["200 שופטים חדשים", "תיקים מהירים יותר", "צדק נגיש לכולם"] },
-        { threshold: 3, items: ["בתי משפט דיגיטליים", "תיקים מסתיימים תוך שנה", "שלטון חוק חזק"] },
-      ],
-      decrease: [
-        { threshold: -1, items: ["תיקים מחכים 6 שנים", "מחסור חמור בשופטים", "צדק מעוכב = עיוות דין"] },
-        { threshold: -2, items: ["מערכת משפט עמוסה", "נאשמים מחכים שנים", "ביטחון משפטי נפגע"] },
-        { threshold: -3, items: ["שלטון חוק בשפל", "צדק רק לבעלי כסף", "שחיתות גוברת"] },
-      ],
-    },
-  },
-  {
-    id: "foreign",
-    label: "משרד החוץ",
-    emoji: "🌐",
-    color: "#0284c7",
-    current: 3,
-    min: 1,
-    max: 7,
-    insights: {
-      decrease: [
-        { threshold: -1,  severity: "warning",  text: "שגרירויות מצטמצמות. מי ידבר בשביל ישראל בלונדון?" },
-        { threshold: -2,  severity: "critical", text: "ישראל מקצצת דיפלומטיה. אבל רוצה שהעולם יבין אותה." },
-      ],
-      increase: [
-        { threshold: 1,   severity: "normal",   text: "שגרירויות חדשות נפתחות. ישראל חוזרת למפה הדיפלומטית." },
-        { threshold: 2,   severity: "normal",   text: "ישראל משפרת יחסים עם מדינות אפריקה ואסיה. הבידוד נגמר." },
-      ],
-    },
-    highlights: {
-      increase: [
-        { threshold: 1, items: ["שגרירויות חדשות", "שיפור יחסי חוץ", "נוכחות בינלאומית חזקה"] },
-        { threshold: 2, items: ["דיפלומטיה פעילה", "הסכמי שיתוף פעולה", "ישראל פחות מבודדת"] },
-      ],
-      decrease: [
-        { threshold: -1, items: ["שגרירויות נסגרות", "חולשה דיפלומטית", "פחות ייצוג בינלאומי"] },
-        { threshold: -2, items: ["ישראל מבודדת יותר", "פחות הסכמים מסחריים", "דיפלומטיה בשפל"] },
-      ],
-    },
-  },
-  {
-    id: "knesset",
-    label: "הכנסת",
+    id: "government",
+    label: "רשויות מקומיות וממשל",
     emoji: "🏛️",
-    color: "#64748B",
-    current: 1,
-    min: 0.5,
-    max: 5,
+    color: "#64748b",
+    current: 26,
+    min: 15,
+    max: 45,
     insights: {
       decrease: [
-        { threshold: -0.2, severity: "warning",  text: "פחות תקציב לכנסת. חברי הכנסת ייסגרו בלי קיוסק? לא בדיוק." },
-        { threshold: -0.5, severity: "critical", text: "הכנסת בתקציב מינימלי. דמוקרטיה זולה — יתכן לא הכי יציבה." },
+        { threshold: 3, severity: "warning",  text: "3,000 פחות פקידים. ומי יאשר לך את הבנייה? אחד." },
+        { threshold: 6, severity: "warning",  text: "ממשלה רזה. הרישוי לגן שלך? 3 שנים. במקרה הטוב." },
+        { threshold: 11, severity: "critical", text: "הממשל כמעט לא קיים. אנרכיה? לא. פשוט עוד בירוקרטיה, רק ללא תקציב." },
       ],
       increase: [
-        { threshold: 0.2,  severity: "normal",   text: "שיפורים בשקיפות הכנסת. ישיבות מדווחות בשידור חי." },
-        { threshold: 0.7,  severity: "normal",   text: "מחקר פרלמנטרי מוגבר. חברי כנסת מחוקקים עם יותר נתונים." },
+        { threshold: 4, severity: "normal", text: "3,000 עובדי מדינה נוספים. שורות קצרות יותר? אולי." },
+        { threshold: 10, severity: "normal", text: "דיגיטציה מלאה של שירותי הממשלה. בעשר שנה מישהו ישתמש." },
       ],
     },
     highlights: {
       increase: [
-        { threshold: 0.2, items: ["שקיפות גבוהה יותר", "מחקר פרלמנטרי", "שידורים חיים מכל ישיבה"] },
-        { threshold: 0.7, items: ["חקיקה מבוססת נתונים", "מנגנוני פיקוח חזקים", "דמוקרטיה מתפקדת"] },
+        { threshold: 4,  items: ["שורות קצרות יותר", "אישורים מהירים יותר", "שירות ציבורי שעובד"] },
+        { threshold: 10, items: ["דיגיטציה מלאה של הממשל", "שירות ממשלתי 24/7", "מודל אסטוניה"] },
       ],
       decrease: [
-        { threshold: -0.2, items: ["פחות שקיפות", "מחקר פרלמנטרי מצומצם", "חקיקה ללא נתונים"] },
-        { threshold: -0.5, items: ["כנסת בתקציב שלד", "פיקוח נחלש", "דמוקרטיה בזול"] },
+        { threshold: -3,  items: ["3,000 פחות פקידים", "אישור בנייה — שנתיים", "בירוקרטיה ללא תקציב"] },
+        { threshold: -6,  items: ["ממשלה שלא פועלת", "רישיון עסק — שנה וחצי", "עצמאים? לא שווה"] },
+        { threshold: -11, items: ["ממשל מינימלי בפועל", "שירותים ציבוריים בקריסה", "כאוס מאורגן"] },
       ],
     },
   },
 ];
 
-export const FIXED_ITEMS = [
-  { label: "ריבית על חוב", amount: 64.6, note: "לא ניתן לשינוי — חוב קיים" },
-  { label: "פנסיות ממשלתיות", amount: 26.8, note: "התחייבות חוקית" },
-];
+// הוצאות קבועות שאינן מופיעות במשחק (ריבית, רשות האוכלוסין, סעיפים אחרים)
+// סה"כ תקציב = 570 (סליידרים) + 103 (אחר) = 673 מיליארד
+// גירעון ברירת מחדל: (673 - 613) / 2420 * 100 = 2.5%
+const OTHER_SPENDING = 103;
+
+// מה כולל התקציב — לפי הרקע שנכתב לכל קטגוריה
+export const CATEGORY_BREAKDOWN = {
+  defense: [
+    "משרד הביטחון",
+    "השב\"כ והמוסד",
+    "חוק חיילים משוחררים",
+  ],
+  national_security: [
+    "משטרה",
+    "שירות בתי הסוהר",
+  ],
+  education: [
+    "משרד החינוך",
+    "מדע, טכנולוגיה ותרבות",
+    "השכלה גבוהה",
+  ],
+  health: [
+    "מימון סל שירותי הבריאות",
+    "העברות לקופות החולים",
+    "תמיכה בבתי החולים הציבוריים",
+    "רכש שירותי בריאות מגופים אחרים",
+  ],
+  welfare: [
+    "משרד הרווחה",
+    "ביטוח לאומי",
+    "הרשות לזכויות ניצולי השואה",
+    "משרד העלייה",
+  ],
+  transit_housing: [
+    "סבסוד כרטיסיות נסיעה בתחבורה הציבורית",
+    "עמידר ועמיגור (דיור ציבורי)",
+    "סיוע בשכר דירה",
+  ],
+  rehabilitation: [
+    "מנהלת תקומה",
+    "שיקום יישובי הצפון",
+    "פיצויים ומענקים לתושבים מפונים",
+    "שיקום עסקים שנפגעו מהמלחמה",
+  ],
+  infrastructure: [
+    "כבישים",
+    "רכבות",
+    "תשתיות אנרגיה ומים",
+    "משרד הבינוי והשיכון (ללא סבסוד דיור)",
+  ],
+  economy: [
+    "משרד הכלכלה והתעשייה",
+    "משרד החקלאות",
+    "הגנת הסביבה",
+    "תיירות",
+    "תקשורת",
+  ],
+  government: [
+    "רשויות מקומיות",
+    "משרד רה\"מ",
+    "משרד המשפטים",
+    "משרד האוצר",
+    "משרד החוץ",
+    "הכנסת",
+    "מבקר המדינה",
+  ],
+};
 
 export function getHighlights(category, delta) {
   if (Math.abs(delta) < 2) return null;
@@ -683,15 +425,9 @@ export function getInsight(category, delta) {
   return best ?? null;
 }
 
-// "אחר" — כל הסעיפים שלא הוכנסו לקטגוריות המשחק (ממשלה, דיגיטציה, אחר כללי)
-// default categories sum=553, fixed=91.4, other=120 → total=764.4 → deficit=(764.4−613)/2420×100=6.25%
-const OTHER_SPENDING = 120;
-
 export function calcDeficit(values) {
   const totalSpend =
-    Object.values(values).reduce((a, b) => a + b, 0) +
-    FIXED_ITEMS.reduce((a, b) => a + b.amount, 0) +
-    OTHER_SPENDING;
+    Object.values(values).reduce((a, b) => a + b, 0) + 103;
   const revenue = 613; // הכנסות המדינה הצפויות לשנת 2027
   return ((totalSpend - revenue) / GDP * 100).toFixed(1);
 }

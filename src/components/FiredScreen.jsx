@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function FiredScreen({ name, onResult, onRestart, onBudget }) {
+export default function FiredScreen({ name, onResult, onRestart }) {
   return (
     <div style={css.page}>
       {/* Red glow bg */}
@@ -61,12 +61,20 @@ export default function FiredScreen({ name, onResult, onRestart, onBudget }) {
           transition={{ delay: 1.2 }}
         >
           <motion.button
+            style={css.btnResult}
+            whileHover={{ scale: 1.02, boxShadow: "0 10px 36px rgba(99,102,241,0.45)" }}
+            whileTap={{ scale: 0.97 }}
+            onClick={onResult}
+          >
+            ראה את התקציב שלך בכל זאת
+          </motion.button>
+          <motion.button
             style={css.btnRestart}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
             onClick={onRestart}
           >
-            ↩ נסה שוב מההתחלה
+            ↩ נסה שוב
           </motion.button>
         </motion.div>
       </motion.div>
@@ -82,8 +90,7 @@ const css = {
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
-    overflowX: "hidden",
-    overflowY: "auto",
+    overflow: "hidden",
     padding: "40px 24px",
   },
   redGlow: {
@@ -151,17 +158,6 @@ const css = {
     letterSpacing: "-0.01em",
     boxShadow: "0 4px 24px rgba(99,102,241,0.35)",
     fontFamily: "inherit",
-  },
-  btnBudget: {
-    padding: "16px 24px",
-    borderRadius: 14,
-    border: "1px solid rgba(251,191,36,0.35)",
-    background: "rgba(251,191,36,0.06)",
-    color: "#FCD34D",
-    fontSize: 15, fontWeight: 600,
-    cursor: "pointer",
-    fontFamily: "inherit",
-    letterSpacing: "-0.01em",
   },
   btnRestart: {
     padding: "16px 24px",

@@ -1,16 +1,18 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const REVENUE    = 613;
-const MIN_BUDGET = 580;
-const MAX_BUDGET = 820;
+const REVENUE        = 613;
+const GDP            = 2420;
+const GOV_DEFICIT    = 3.4;
+const MIN_BUDGET     = 580;
+const MAX_BUDGET     = 820;
 const STEP       = 5;
 const REVENUE_PCT        = ((REVENUE - MIN_BUDGET) / (MAX_BUDGET - MIN_BUDGET)) * 100;
 const DEFICIT_TARGET     = 694;
 const DEFICIT_GAP        = DEFICIT_TARGET - REVENUE; // 81
 const DEFICIT_TARGET_PCT = ((DEFICIT_TARGET - MIN_BUDGET) / (MAX_BUDGET - MIN_BUDGET)) * 100;
 
-/* Comments by zone */
+/* Cynical comments by gap (budget - 613) */
 const SLIDER_COMMENTS = {
   withinTarget: [
     { threshold: 5,  text: "יש לך, יש לך. קצת גירעון עוד לא הרג אף אחד" },
@@ -30,7 +32,7 @@ const SLIDER_COMMENTS = {
   decrease: [
     { threshold: 5,   text: "שמרן קצת. בנק ישראל שר לכבודך 🏦" },
     { threshold: 15,  text: "המספריים של אדוארד — הגרסה הישראלית" },
-    { threshold: 25,  text: "שמרן כמו שוויץ — בלי האלפים" },
+    { threshold: 25,  text: "שמרן כמו שוויץ — בלי האלפים 🇨🇭" },
     { threshold: 33,  text: "חותך ללא רחם, קרן המטבע על ענן" },
   ],
 };
@@ -38,9 +40,9 @@ const SLIDER_COMMENTS = {
 function getSliderComment(gap) {
   if (gap === 0) return null;
   let list;
-  if (gap < 0)               list = SLIDER_COMMENTS.decrease;
+  if (gap < 0)                list = SLIDER_COMMENTS.decrease;
   else if (gap <= DEFICIT_GAP) list = SLIDER_COMMENTS.withinTarget;
-  else                       list = SLIDER_COMMENTS.increase;
+  else                        list = SLIDER_COMMENTS.increase;
   const abs = Math.abs(gap);
   let best  = null;
   for (const item of list) {
@@ -54,7 +56,7 @@ const FINANCING = [
     id: "taxes",
     emoji: "💰",
     label: "אעלה מיסים",
-    cynical: "עכשיו לכולם יהיה ברור למה הם לא גומרים את החודש",
+    cynical: "ישראל כבר בעשירייה הגבוהה של OECD בנטל מס. אבל בטח יש עוד מקום.",
   },
   {
     id: "loans",
@@ -71,11 +73,13 @@ export default function BudgetScreen({ onBudgetSet }) {
   const trackRef = useRef(null);
   const dragging = useRef(false);
 
-  const gap            = budget - REVENUE;
-  const isOver         = gap > 0;
-  const isOverTarget   = gap > DEFICIT_GAP;
-  const showWarnBlink  = isOverTarget;
-  const pct            = ((budget - MIN_BUDGET) / (MAX_BUDGET - MIN_BUDGET)) * 100;
+  const gap           = budget - REVENUE;
+  const deficit       = parseFloat(((budget - REVENUE) / GDP * 100).toFixed(1));
+  const deficitColor  = deficit < 0 ? "#10B981" : deficit < GOV_DEFICIT ? "#10B981" : deficit < 5.5 ? "#F59E0B" : "#EF4444";
+  const isOver        = gap > 0;
+  const isOverTarget  = gap > DEFICIT_GAP;
+  const showWarnBlink = isOverTarget;
+  const pct           = ((budget - MIN_BUDGET) / (MAX_BUDGET - MIN_BUDGET)) * 100;
 
   /* ── Slider drag ── */
   const computeVal = clientX => {
@@ -121,6 +125,16 @@ export default function BudgetScreen({ onBudgetSet }) {
 
       <div style={S.shell}>
 
+        {/* Nav */}
+        <div style={S.nav}>
+          <div style={S.navBrand}>
+            <span style={S.navLogo}>כלכליסט</span>
+            <span style={S.navDot} />
+            <span style={S.navSub}>בחירות 2026</span>
+          </div>
+          <span style={S.navStep}>שלב 1 מתוך 2</span>
+        </div>
+
         {/* Title */}
         <motion.div
           style={S.titleBlock}
@@ -130,7 +144,7 @@ export default function BudgetScreen({ onBudgetSet }) {
         >
           <div style={S.eyebrow}>שר האוצר, הגיעה השאלה הגדולה:</div>
           <div style={S.title}>מה גודל התקציב שלך?</div>
-          <div style={S.subtitle}>כמה תוציא בשנת 2027?</div>
+          <div style={S.subtitle}>כמה תוציאו בשנת 2027?</div>
         </motion.div>
 
         {/* Big number */}
@@ -171,9 +185,6 @@ export default function BudgetScreen({ onBudgetSet }) {
           </div>
         </motion.div>
 
-        {/* Slider hint */}
-        <div style={S.sliderHint}>הזז את המחוון כדי לקבוע את גובה התקציב</div>
-
         {/* Slider */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -202,7 +213,6 @@ export default function BudgetScreen({ onBudgetSet }) {
             </div>
             <div style={S.notchConnector} />
           </div>
-
 
           <div
             ref={trackRef}
@@ -234,7 +244,6 @@ export default function BudgetScreen({ onBudgetSet }) {
               zIndex: 3,
               pointerEvents: "none",
             }} />
-
 
             {/* Deficit target notch pip — visible only when over target */}
             {isOverTarget && <div style={{
@@ -398,8 +407,7 @@ const S = {
     background: "#030507",
     position: "relative",
     overflow: "hidden",
-    display: "flex",
-    alignItems: "center",
+    padding: "0 0 60px",
   },
   bgGrad: {
     position: "fixed", inset: 0, pointerEvents: "none",
@@ -417,10 +425,9 @@ const S = {
   shell: {
     maxWidth: 600,
     margin: "0 auto",
-    padding: "24px 20px 20px",
+    padding: "0 20px",
     position: "relative",
     zIndex: 10,
-    width: "100%",
   },
 
   nav: {
@@ -437,20 +444,20 @@ const S = {
   navSub:   { fontSize: 12, color: "rgba(255,255,255,0.3)", fontWeight: 500 },
   navStep:  { fontSize: 11, fontWeight: 700, color: "rgba(99,102,241,0.7)", letterSpacing: "0.1em", textTransform: "uppercase" },
 
-  titleBlock: { marginBottom: 16, textAlign: "center" },
+  titleBlock: { marginBottom: 28, textAlign: "center" },
   eyebrow: {
     fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
-    textTransform: "uppercase", color: "rgba(99,102,241,0.7)", marginBottom: 8,
+    textTransform: "uppercase", color: "rgba(99,102,241,0.7)", marginBottom: 10,
   },
   title: {
-    fontSize: "clamp(22px, 5.5vw, 32px)", fontWeight: 900,
-    color: "#f8fafc", letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 6,
+    fontSize: "clamp(26px, 6vw, 38px)", fontWeight: 900,
+    color: "#f8fafc", letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 8,
   },
-  subtitle: { fontSize: 13, color: "rgba(255,255,255,0.3)", fontWeight: 400 },
+  subtitle: { fontSize: 15, color: "rgba(255,255,255,0.3)", fontWeight: 400 },
 
-  bigNumWrap: { textAlign: "center", marginBottom: 20 },
+  bigNumWrap: { textAlign: "center", marginBottom: 36 },
   bigNum: {
-    fontSize: "clamp(64px, 15vw, 108px)",
+    fontSize: "clamp(80px, 18vw, 130px)",
     fontWeight: 900,
     letterSpacing: "-0.05em",
     lineHeight: 1,
@@ -458,9 +465,9 @@ const S = {
     fontVariantNumeric: "tabular-nums",
     fontFamily: "'Inter', system-ui, sans-serif",
   },
-  bigNumSub: { fontSize: 14, color: "rgba(255,255,255,0.25)", fontWeight: 500, marginTop: 4 },
-  bigNumNote: { fontSize: 11, color: "rgba(99,102,241,0.6)", fontWeight: 500, marginTop: 3, letterSpacing: "0.02em" },
-  commentSlot: { minHeight: 24, marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center" },
+  bigNumSub: { fontSize: 15, color: "rgba(255,255,255,0.25)", fontWeight: 500, marginTop: 6 },
+  bigNumNote: { fontSize: 11, color: "rgba(99,102,241,0.6)", fontWeight: 500, marginTop: 4, letterSpacing: "0.02em" },
+  commentSlot: { minHeight: 28, marginTop: 10, display: "flex", alignItems: "center", justifyContent: "center" },
   comment: { fontSize: 14, fontWeight: 600, letterSpacing: "-0.01em", textAlign: "center", lineHeight: 1.4 },
 
   /* Slider */
@@ -513,35 +520,6 @@ const S = {
     width: 1, height: 12,
     background: "rgba(16,185,129,0.28)",
   },
-
-  notchBadgeRed: {
-    background: "rgba(239,68,68,0.07)",
-    border: "1px solid rgba(239,68,68,0.22)",
-    borderRadius: 8,
-    padding: "5px 12px",
-    textAlign: "center",
-    whiteSpace: "nowrap",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 2,
-  },
-  notchBadgeTopRed: {
-    fontSize: 12, fontWeight: 700,
-    letterSpacing: "0.02em", color: "rgba(239,68,68,0.85)",
-  },
-  notchBadgeNumRed: {
-    fontSize: 22, fontWeight: 900, color: "rgba(239,68,68,1)",
-    letterSpacing: "-0.02em",
-  },
-  notchBadgeLabelRed: {
-    fontSize: 14, fontWeight: 600, color: "rgba(239,68,68,0.9)",
-    letterSpacing: "0.01em",
-  },
-  notchConnectorRed: {
-    width: 1, height: 12,
-    background: "rgba(239,68,68,0.28)",
-  },
   thumb: {
     position: "absolute",
     width: 28, height: 28,
@@ -577,6 +555,28 @@ const S = {
     lineHeight: 1.5,
     marginBottom: 16,
     textAlign: "center",
+  },
+
+  deficitRow: {
+    display: "flex", alignItems: "center", justifyContent: "center",
+    gap: 0, marginBottom: 16,
+    background: "rgba(255,255,255,0.03)",
+    border: "1px solid rgba(255,255,255,0.07)",
+    borderRadius: 14,
+    padding: "12px 20px",
+  },
+  deficitChip: {
+    flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
+  },
+  deficitDivider: {
+    width: 1, alignSelf: "stretch", background: "rgba(255,255,255,0.08)", margin: "0 16px",
+  },
+  deficitChipLabel: {
+    fontSize: 9, fontWeight: 700, letterSpacing: "0.1em",
+    textTransform: "uppercase", color: "rgba(255,255,255,0.25)",
+  },
+  deficitChipVal: {
+    fontSize: 22, fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1,
   },
 
   cta: {

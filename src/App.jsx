@@ -3,7 +3,6 @@ import LandingScreen from "./components/LandingScreen";
 import BudgetScreen  from "./components/BudgetScreen";
 import BudgetBuilder from "./components/BudgetBuilder";
 import ResultCard    from "./components/ResultCard";
-import FiredScreen   from "./components/FiredScreen";
 import { CATEGORIES } from "./data/budgetData";
 import "./index.css";
 
@@ -25,8 +24,9 @@ export default function App() {
     setScreen("builder");
   }, []);
 
-  const handleFinish  = useCallback(() => { window.scrollTo({ top: 0, behavior: "instant" }); setScreen("result"); }, []);
-  const handleTimeout = useCallback(() => { window.scrollTo({ top: 0, behavior: "instant" }); setScreen("fired");  }, []);
+  const handleBackToBudget = useCallback(() => setScreen("budget"), []);
+
+  const handleFinish  = useCallback(() => setScreen("result"), []);
 
   const handleRestart = useCallback(() => {
     setValues(initValues());
@@ -48,7 +48,7 @@ export default function App() {
           values={values}
           setValues={setValues}
           onFinish={handleFinish}
-          onTimeout={handleTimeout}
+          onBack={handleBackToBudget}
           name={name}
           totalBudget={totalBudget}
           financingMethod={financingMethod}
@@ -58,17 +58,8 @@ export default function App() {
         <ResultCard
           values={values}
           name={name}
-          onRestart={handleRestart}
           totalBudget={totalBudget}
-          financingMethod={financingMethod}
-        />
-      )}
-      {screen === "fired" && (
-        <FiredScreen
-          name={name}
-          onResult={() => setScreen("result")}
           onRestart={handleRestart}
-          onBudget={() => setScreen("budget")}
         />
       )}
     </div>
