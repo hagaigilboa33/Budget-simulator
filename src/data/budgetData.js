@@ -16,13 +16,13 @@ export const CATEGORIES = [
       decrease: [
         { threshold: 5,  severity: "warning",  text: "חיזבאללה שלח פרחים. 5 מיליארד פחות לביטחון." },
         { threshold: 15, severity: "critical", text: "15 מיליארד קיצוץ. כיפת ברזל? כיפת אלומיניום." },
-        { threshold: 30, severity: "critical", text: "30 מיליארד. נחמד. אולי ננסה שלום בשוק הפעם." },
-        { threshold: 50, severity: "critical", text: "חצי תקציב הביטחון. הזכרנו לך שאנחנו במזרח התיכון?" },
+        { threshold: 30, severity: "critical", text: "קיצוץ דרמטי של 30 מיליארד שקל. אולי בכל זאת השלום מתחיל בתוכנו?" },
+        { threshold: 50, severity: "critical", text: "חצי מתקציב הביטחון הלך. תוכניות הצטיידות נבלמות, המחסנים מתרוקנים" },
       ],
       increase: [
         { threshold: 10, severity: "normal",  text: "10 מיליארד שקל נוספים. בתעשיות הביטחוניות חוגגים." },
-        { threshold: 30, severity: "warning", text: "30 מיליארד. ישראל תהיה ה-5 בעולם בהוצאה ביטחונית ביחס לתמ\"ג. בבואה." },
-        { threshold: 50, severity: "warning", text: "50 מיליארד תוספת. הצבא? עשיר. בתי ספר? לא כל כך." },
+        { threshold: 30, severity: "warning", text: "עוד 30 מיליארד שקל בדרך. לארוז לך עשרות מטוסי F-35?" },
+        { threshold: 50, severity: "warning", text: "50 מיליארד שקל. בקריה עוברים מקוסקוס לכבד אווז" },
       ],
     },
     highlights: {
@@ -49,13 +49,13 @@ export const CATEGORIES = [
     max: 45,
     insights: {
       decrease: [
-        { threshold: 3,  severity: "warning",  text: "שוטרים פחות. ועשרת אלפים אסירים — מי ישמור עליהם?" },
-        { threshold: 8,  severity: "critical", text: "שירות בתי הסוהר כבר עמוס מדי. קיצוץ? גד." },
-        { threshold: 12, severity: "critical", text: "ירידה חדה בביטחון הפנים. אולי הפשע יסדר את עצמו." },
+        { threshold: 3,  severity: "warning",  text: "חייגתם 100? אל תנתקו, זה עלול לקחת זמן" },
+        { threshold: 8,  severity: "critical", text: "8 מיליארד שקל פחות, העבריינים עובדים שעות נוספות" },
+        { threshold: 12, severity: "critical", text: "ירידה חדה בביטחון הפנים. מפחיד להסתובב בלילה" },
       ],
       increase: [
-        { threshold: 5,  severity: "normal", text: "ניידות נוספות ברחוב. מישהו צריך לעבוד בלילה." },
-        { threshold: 12, severity: "normal", text: "שיפוץ בתי סוהר ושכר שוטרים הוגן. מאוחר, אבל יפה." },
+        { threshold: 5,  severity: "normal", text: "המשטרה מגייסת אלפי שוטרים חדשים, נגמרו התירוצים" },
+        { threshold: 12, severity: "normal", text: "הפקק בבתי הכלא משתחרר - אלפי מקומות כליאה חדשים" },
       ],
     },
     highlights: {
@@ -80,16 +80,16 @@ export const CATEGORIES = [
     max: 210,
     insights: {
       decrease: [
-        { threshold: 5,  severity: "warning",  text: "5,000 מורים פחות. אבל הכיתה של 42 ממילא התרגלה לבד." },
-        { threshold: 15, severity: "critical", text: "ילדים לא צריכים ספרים. יש TikTok." },
-        { threshold: 25, severity: "critical", text: "שכר לימוד עלה 25%. עוד 20,000 אקדמאים יעזבו לברלין." },
-        { threshold: 40, severity: "critical", text: "מחלקות מחקר נסגרות. הדור הבא של החוקרים? אמריקאים." },
+        { threshold: 5,  severity: "warning",  text: "5,000 מורים פחות, אבל 40 תלמידים בכיתה כבר התרגלו להיות לבד" },
+        { threshold: 15, severity: "critical", text: "ילדים לא צריכים ספרים. יש TikTok" },
+        { threshold: 25, severity: "critical", text: "רבע מתקציב משרד החינוך נמחק. המורה לספורט: קחו כדור" },
+        { threshold: 40, severity: "critical", text: "מחלקות מחקר נסגרות. הדור הבא של החוקרים? אמריקאים" },
       ],
       increase: [
-        { threshold: 5,  severity: "normal", text: "5,000 מורים חדשים. הם יצאו להפגנה בעוד שנה, אבל בינתיים." },
-        { threshold: 15, severity: "normal", text: "יום לימודים ארוך לכל ישראל. ההורים בוכים משמחה." },
-        { threshold: 35, severity: "normal", text: "20,000 מלגות לסטודנטים. גם הם ישתמשו בהן כדי לעזוב." },
-        { threshold: 55, severity: "normal", text: "ישראל שומרת על פרופסורים בארץ. מושג חדש." },
+        { threshold: 5,  severity: "normal", text: "5,000 מורים חדשים - ולכולם יש עיניים בגב" },
+        { threshold: 15, severity: "normal", text: "יום לימודים ארוך לתלמידי ישראל. ההורים בוכים מאושר" },
+        { threshold: 35, severity: "normal", text: "תקציב ההשכלה הגבוהה מזנק כמעט פי 4. בריחת מוחות? לישראל" },
+        { threshold: 55, severity: "normal", text: "מחזירים עטרה ליושנה: ישראל מסתערת על צמרת המחקר העולמית" },
       ],
     },
     highlights: {
@@ -117,15 +117,15 @@ export const CATEGORIES = [
     max: 115,
     insights: {
       decrease: [
-        { threshold: 5,  severity: "warning",  text: "המתנה לרופא מומחה עלתה ל-5 חודשים. נסה אספירין." },
-        { threshold: 12, severity: "critical", text: "20 מחלקות אשפוז נסגרות. אל דאגה — פרטי רק 3,000 ₪ לפגישה." },
+        { threshold: 5,  severity: "warning",  text: "המתנה לרופא מומחה עלתה ל-5 חודשים. נסה אספירין" },
+        { threshold: 12, severity: "critical", text: "כמעט חמישית מתקציב משרד הבריאות נמחק. בהצלחה בחורף" },
         { threshold: 20, severity: "critical", text: "ישראל חוזרת לרמת בריאות של שנות ה-90. נוסטלגיה אמיתית." },
-        { threshold: 27, severity: "critical", text: "אחרי הקיצוץ הזה, ה-IMF מציע לך לבדוק ביטוח רפואי פרטי." },
+        { threshold: 27, severity: "critical", text: "העיקר הבריאות? עם קיצוץ כל כך דרמטי - התשובה היא לא" },
       ],
       increase: [
-        { threshold: 5,  severity: "normal", text: "1,200 מיטות אשפוז חדשות. לאנשים שיהיו בהן." },
-        { threshold: 15, severity: "normal", text: "רופא משפחה שמגיע תוך שבוע. מושג חדשני לישראל." },
-        { threshold: 30, severity: "normal", text: "ממוצע OECD בבריאות. אחרי 40 שנה של פיגור." },
+        { threshold: 5,  severity: "normal", text: "תוספת של אלפי מיטות אשפוז יוצאת לדרך. הפעם לא במסדרון" },
+        { threshold: 15, severity: "normal", text: "הרחבה דרמטית - פי 10 - של התוכנית הלאומית לבריאות הנפש" },
+        { threshold: 30, severity: "normal", text: "ישראל מתקרבת לממוצע ה-OECD בהוצאה לאומית לבריאות" },
       ],
     },
     highlights: {
