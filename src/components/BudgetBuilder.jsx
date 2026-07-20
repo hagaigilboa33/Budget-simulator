@@ -32,7 +32,7 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
     if (ins) {
       // Always reset the dismiss timer so insight stays while user is dragging
       clearTimeout(timer.current);
-      timer.current = setTimeout(() => setInsight(null), 5500);
+      timer.current = setTimeout(() => setInsight(null), 3500);
       // Only update state (and trigger animation) when the text actually changes
       setInsight(prev => {
         if (prev && prev.text === ins.text && prev.catId === cat.id) return prev;
@@ -509,12 +509,6 @@ function InsightToast({ insight }) {
           {insight.text}
         </span>
       </div>
-      <motion.div
-        style={{ ...css.toastProgress, background: borderCol }}
-        initial={{ scaleX: 1 }}
-        animate={{ scaleX: 0 }}
-        transition={{ duration: 5.5, ease: "linear" }}
-      />
     </motion.div>
   );
 }
