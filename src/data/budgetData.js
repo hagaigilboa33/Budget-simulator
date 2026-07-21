@@ -80,9 +80,9 @@ export const CATEGORIES = [
     max: 210,
     insights: {
       decrease: [
-        { threshold: 5,  severity: "warning",  text: "5,000 מורים פחות, אבל 40 תלמידים בכיתה כבר התרגלו להיות לבד" },
+        { threshold: 5,  severity: "warning",  text: "5,000 מורים פחות, 40 תלמידים בכיתה התרגלו להיות לבד" },
         { threshold: 15, severity: "critical", text: "ילדים לא צריכים ספרים. יש TikTok" },
-        { threshold: 25, severity: "critical", text: "רבע מתקציב משרד החינוך נמחק. המורה לספורט: קחו כדור" },
+        { threshold: 25, severity: "critical", text: "רבע מתקציב החינוך נמחק. המורה לספורט מציע: קחו כדור" },
         { threshold: 40, severity: "critical", text: "מחלקות מחקר נסגרות. הדור הבא של החוקרים? אמריקאים" },
       ],
       increase: [
@@ -120,7 +120,7 @@ export const CATEGORIES = [
         { threshold: 5,  severity: "warning",  text: "המתנה לרופא מומחה עלתה ל-5 חודשים. נסה אספירין" },
         { threshold: 12, severity: "critical", text: "כמעט חמישית מתקציב משרד הבריאות נמחק. בהצלחה בחורף" },
         { threshold: 20, severity: "critical", text: "ישראל חוזרת לרמת בריאות של שנות ה-90. נוסטלגיה אמיתית." },
-        { threshold: 27, severity: "critical", text: "העיקר הבריאות? עם קיצוץ כל כך דרמטי - התשובה היא לא" },
+        { threshold: 27, severity: "critical", text: "העיקר הבריאות? עם קיצוץ כזה התשובה היא לא" },
       ],
       increase: [
         { threshold: 5,  severity: "normal", text: "תוספת של אלפי מיטות אשפוז יוצאת לדרך. הפעם לא במסדרון" },
@@ -152,15 +152,15 @@ export const CATEGORIES = [
     max: 140,
     insights: {
       decrease: [
-        { threshold: 5,  severity: "warning",  text: "קיצוץ בקצבאות. הנכים שלחו מכתב מחאה. לא ענו להם." },
-        { threshold: 15, severity: "critical", text: "ניפחת את הגירעון או קצצת לחלשים. בחרת בחלשים. קלאסי." },
-        { threshold: 25, severity: "critical", text: "שינוי מבני בזכאות לקצבאות. כלומר — פחות אנשים יקבלו." },
-        { threshold: 35, severity: "critical", text: "עניים, ניצולי שואה, עולים — כולם ספגו. מי אחר נשאר?" },
+        { threshold: 5,  severity: "warning",  text: "הנכים סופגים קיצוץ חד בקצבאות - ושוב יוצאים לרחובות" },
+        { threshold: 15, severity: "critical", text: "הגירעון קטן, אבל החלשים משלמים על זה ביוקר" },
+        { threshold: 25, severity: "critical", text: "25 מיליארד. "שינוי מבני" מוחק את כל קצבאות הנכות במכה אחת" },
+        { threshold: 35, severity: "critical", text: "מקצצים ללא רחם. עניים, ניצולי שואה, עולים – כולם ללא מענה" },
       ],
       increase: [
-        { threshold: 5,  severity: "normal", text: "העלאת קצבת נכות ב-15%. לא מותרות — רק כיסוי קצת יותר טוב." },
-        { threshold: 18, severity: "normal", text: "פנסיית זקנה בסיסית לכל אזרח. אירופה עושה כבר 50 שנה." },
-        { threshold: 30, severity: "normal", text: "הכנסה בסיסית מובטחת. שמאל? ימין? לאנשים זה לא משנה." },
+        { threshold: 5,  severity: "normal", text: "קצבת הנכות עולה ב-15%. עוד 700 שקל בדיוק למי שצריך" },
+        { threshold: 18, severity: "normal", text: "18 מיליארד שקל. קצבת הזקנה גדלה בכ־1,200 שקל בחודש" },
+        { threshold: 30, severity: "normal", text: "מהפיכה בהבטחת ההכנסה: 130 אלף זכאים מקבלים אלפי שקלים יותר" },
       ],
     },
     highlights: {
