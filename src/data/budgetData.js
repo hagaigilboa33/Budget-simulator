@@ -152,15 +152,14 @@ export const CATEGORIES = [
     max: 140,
     insights: {
       decrease: [
-        { threshold: 5,  severity: "warning",  text: "הנכים סופגים קיצוץ חד בקצבאות - ושוב יוצאים לרחובות" },
-        { threshold: 15, severity: "critical", text: "הגירעון קטן, אבל החלשים משלמים על זה ביוקר" },
-        { threshold: 25, severity: "critical", text: "25 מיליארד. "שינוי מבני" מוחק את כל קצבאות הנכות במכה אחת" },
-        { threshold: 35, severity: "critical", text: "מקצצים ללא רחם. עניים, ניצולי שואה, עולים – כולם ללא מענה" },
+        { threshold: 5,  severity: "warning",  text: "הנכים דורשים עדכון של הקצבאות – מאיפה יגיע הכסף?" },
+        { threshold: 15, severity: "critical", text: "תקציב הליבה של משרד הרווחה נמחק. ילדים בסיכון? תתמודדו" },
+        { threshold: 25, severity: "critical", text: 'מי צריך רווחה כשאפשר בלי? באוצר קוראים לזה - "שינוי מבני"' },
       ],
       increase: [
         { threshold: 5,  severity: "normal", text: "קצבת הנכות עולה ב-15%. עוד 700 שקל בדיוק למי שצריך" },
-        { threshold: 18, severity: "normal", text: "18 מיליארד שקל. קצבת הזקנה גדלה בכ־1,200 שקל בחודש" },
-        { threshold: 30, severity: "normal", text: "מהפיכה בהבטחת ההכנסה: 130 אלף זכאים מקבלים אלפי שקלים יותר" },
+        { threshold: 18, severity: "normal", text: "הגידו כן לזקן! קצבת הזקנה גדלה בכ־1,200 שקל בחודש" },
+        { threshold: 30, severity: "normal", text: "קפיצה היסטורית! ישראל מצמצמת את הפער ממדינות הרווחה של ה־OECD" },
       ],
     },
     highlights: {
