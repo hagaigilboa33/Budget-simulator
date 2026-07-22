@@ -186,13 +186,13 @@ export const CATEGORIES = [
     max: 40,
     insights: {
       decrease: [
-        { threshold: 3,  severity: "warning",  text: "הנסיעה ברכבת מתייקרת, אבל השכר נשאר בתחנה" },
-        { threshold: 8,  severity: "critical", text: "התור לדיור ציבורי מתארך. הזכאים מוותרים על החלום" },
-        { threshold: 12, severity: "critical", text: "תוכנית דירה בהנחה נכנסת לפריזר. חוזרים ליד2" },
+        { threshold: 3,  severity: "warning",  text: "הנסיעה ברכבת מתייקרת. השכר? נשאר בתחנה" },
+        { threshold: 8,  severity: "critical", text: "תור ענק לדיור הציבורי. החלום לדירה הלך" },
+        { threshold: 12, severity: "critical", text: "דירה בהנחה נכנסת לפריזר. חוזרים ליד2" },
       ],
       increase: [
-        { threshold: 5,  severity: "normal", text: "ההנחות באפליקציות מתרחבות. יום סטודנט שמח לכולם" },
-        { threshold: 14, severity: "normal", text: 'תדירות האוטובוסים בנגב מזנקת. הגמלים יוצאים לחל"ת' },
+        { threshold: 5,  severity: "normal", text: "ההנחות באפליקציות מתרחבות. הסטודנטים על ענן" },
+        { threshold: 14, severity: "normal", text: 'תדירות האוטובוסים בנגב בשיא. הגמלים יוצאים לחל"ת' },
       ],
     },
     highlights: {
@@ -217,13 +217,13 @@ export const CATEGORIES = [
     max: 65,
     insights: {
       decrease: [
-        { threshold: 5,  severity: "warning",  text: "בצפון חיכו לחצי מיליארד לפיצוי עסקים? שימשיכו לחכות" },
-        { threshold: 15, severity: "critical", text: "הבנייה מחדש מואטת. תקומה שאינה קמה." },
-        { threshold: 18, severity: "critical", text: "השיקום הופך לחלום. רבים לא יחזרו." },
+        { threshold: 5,  severity: "warning",  text: "העסקים בצפון חיכו לחצי מיליארד? שימשיכו לחכות" },
+        { threshold: 15, severity: "critical", text: "קצב הבנייה מחדש מואט. התקומה לא קמה" },
+        { threshold: 18, severity: "critical", text: "אלפים מתושבי הצפון מודיעים: לא נחזור הביתה" },
       ],
       increase: [
         { threshold: 10, severity: "normal", text: "עוברים לבנייה מואצת. 10,000 משפחות בדרך הביתה" },
-        { threshold: 25, severity: "normal", text: "יש כיסוי: התוכנית האסטרטגית לשיקום ישובי הגבול עם לבנון יוצאת לדרך" },
+        { threshold: 25, severity: "normal", text: "יש כיסוי: התוכנית לשיקום ישובי גבול לבנון יוצאת לדרך" },
       ],
     },
     highlights: {
