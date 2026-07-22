@@ -191,8 +191,8 @@ export const CATEGORIES = [
         { threshold: 12, severity: "critical", text: "תוכנית דירה בהנחה נכנסת לפריזר. חוזרים ליד2" },
       ],
       increase: [
-        { threshold: 5,  severity: "normal", text: "ההנחות ברב-קו ובאפליקציות מתרחבות. הסטודנטים שמחים. בינתיים" },
-        { threshold: 14, severity: "normal", text: 'זינוק היסטורי בתדירות של קווי האוטובוס בנגב. הגמלים יוצאים לחל"ת' },
+        { threshold: 5,  severity: "normal", text: "ההנחות באפליקציות מתרחבות. יום סטודנט שמח לכולם" },
+        { threshold: 14, severity: "normal", text: 'תדירות האוטובוסים בנגב מזנקת. הגמלים יוצאים לחל"ת' },
       ],
     },
     highlights: {
