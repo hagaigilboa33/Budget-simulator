@@ -21,7 +21,7 @@ export const CATEGORIES = [
       ],
       increase: [
         { threshold: 10, severity: "normal",  text: "10 מיליארד שקל נוספים. בתעשיות הביטחוניות חוגגים." },
-        { threshold: 30, severity: "warning", text: "עוד 30 מיליארד שקל בדרך. לארוז לך עשרות מטוסי F-35?" },
+        { threshold: 30, severity: "warning", text: "עוד 30 מיליארד שקל בדרך. אתה אוכל פה את ה-35-F או לארוז לך?" },
         { threshold: 50, severity: "warning", text: "50 מיליארד שקל. בקריה עוברים מקוסקוס לכבד אווז" },
       ],
     },
@@ -82,7 +82,7 @@ export const CATEGORIES = [
       decrease: [
         { threshold: 5,  severity: "warning",  text: "5,000 מורים פחות, 40 תלמידים בכיתה התרגלו להיות לבד" },
         { threshold: 15, severity: "critical", text: "ילדים לא צריכים ספרים. יש TikTok" },
-        { threshold: 25, severity: "critical", text: "רבע מתקציב החינוך נמחק. המורה לספורט מציע: קחו כדור" },
+        { threshold: 25, severity: "critical", text: "רבע מתקציב החינוך נמחק. המורה לספורט: קחו כדור" },
         { threshold: 40, severity: "critical", text: "מחלקות מחקר נסגרות. הדור הבא של החוקרים? אמריקאים" },
       ],
       increase: [
@@ -118,13 +118,13 @@ export const CATEGORIES = [
     insights: {
       decrease: [
         { threshold: 5,  severity: "warning",  text: "המתנה לרופא מומחה עלתה ל-5 חודשים. נסה אספירין" },
-        { threshold: 12, severity: "critical", text: "כמעט חמישית מתקציב משרד הבריאות נמחק. בהצלחה בחורף" },
+        { threshold: 12, severity: "critical", text: "חמישית מתקציב משרד הבריאות נמחק. בהצלחה בחורף" },
         { threshold: 20, severity: "critical", text: "ישראל חוזרת לרמת בריאות של שנות ה-90. נוסטלגיה אמיתית." },
         { threshold: 27, severity: "critical", text: "העיקר הבריאות? עם קיצוץ כזה התשובה היא לא" },
       ],
       increase: [
         { threshold: 5,  severity: "normal", text: "תוספת של אלפי מיטות אשפוז יוצאת לדרך. הפעם לא במסדרון" },
-        { threshold: 15, severity: "normal", text: "הרחבה דרמטית - פי 10 - של התוכנית הלאומית לבריאות הנפש" },
+        { threshold: 15, severity: "normal", text: "התוכנית הלאומית לבריאות הנפש מורחבת פי 10. כשמגיע מגיע" },
         { threshold: 30, severity: "normal", text: "ישראל מתקרבת לממוצע ה-OECD בהוצאה לאומית לבריאות" },
       ],
     },
@@ -159,7 +159,7 @@ export const CATEGORIES = [
       increase: [
         { threshold: 5,  severity: "normal", text: "קצבת הנכות עולה ב-15%. עוד 700 שקל בדיוק למי שצריך" },
         { threshold: 18, severity: "normal", text: "הגידו כן לזקן! קצבת הזקנה גדלה בכ־1,200 שקל בחודש" },
-        { threshold: 30, severity: "normal", text: "קפיצה היסטורית! ישראל מצמצמת את הפער ממדינות הרווחה של ה־OECD" },
+        { threshold: 30, severity: "normal", text: "ישראל מצמצמת את הפער ממדינות הרווחה של ה-OECD" },
       ],
     },
     highlights: {
@@ -286,7 +286,7 @@ export const CATEGORIES = [
       ],
       increase: [
         { threshold: 3, severity: "normal", text: "החקלאים מקבלים זריקת עידוד. לראשונה: קיווי בנגב" },
-        { threshold: 8, severity: "normal", text: "התיירים חוזרים לישראל. חוזרים לרמות שלפני המלחמה" },
+        { threshold: 8, severity: "normal", text: "התיירים חוזרים לישראל כמו לפני המלחמה. ימות המשיח" },
       ],
     },
     highlights: {
