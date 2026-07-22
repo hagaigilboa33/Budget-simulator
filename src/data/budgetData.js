@@ -248,14 +248,14 @@ export const CATEGORIES = [
     max: 80,
     insights: {
       decrease: [
-        { threshold: 5,  severity: "warning",  text: "המטרו מתעכב ב-3 שנים. ישראל מעצמת עיכובים עולמית" },
+        { threshold: 5,  severity: "warning",  text: "המטרו מתעכב ב-3 שנים. מעצמת איחורים עולמית" },
         { threshold: 12, severity: "critical", text: "היעד של 30% אנרגיה מתחדשת נדחה ל-2032? בקרוב יידחה ל-2035" },
         { threshold: 20, severity: "critical", text: "ישראל בתחתית ה-OECD בתחבורה ציבורית. בסוף מתרגלים להכל" },
       ],
       increase: [
-        { threshold: 10, severity: "normal", text: 'הקו הירוק בת"א מקבל דחיפה קדימה. ניפגש באמצע 2028?' },
-        { threshold: 25, severity: "normal", text: "המטרו מקדים את לוחות הזמנים. החיבור לרעננה יוצא לדרך" },
-        { threshold: 40, severity: "normal", text: "אימפריה! ישראל בדרך לסגור את פער התחבורה מול אירופה עד 2040" },
+        { threshold: 10, severity: "normal", text: "הקו הירוק מקבל דחיפה. גוזרים סרטים ב-2028?" },
+        { threshold: 25, severity: "normal", text: 'המטרו מקדים את הלו"ז. ברעננה מתחילים לחלום' },
+        { threshold: 40, severity: "normal", text: "ישראל בדרך לסגור את פער התחבורה מאירופה עד 2040" },
       ],
     },
     highlights: {
