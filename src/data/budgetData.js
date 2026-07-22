@@ -285,8 +285,8 @@ export const CATEGORIES = [
         { threshold: 4, severity: "critical", text: "תיירות ותעשייה ישלמו. הצמיחה — לא." },
       ],
       increase: [
-        { threshold: 3, severity: "normal", text: "תמיכה בחקלאות ותעשייה. אפשר לגדל קיווי בנגב." },
-        { threshold: 8, severity: "normal", text: "ישראל מושכת תיירים ומפעלים. השקל מרוצה." },
+        { threshold: 3, severity: "normal", text: "החקלאים מקבלים זריקת עידוד. לראשונה: קיווי בנגב" },
+        { threshold: 8, severity: "normal", text: "התיירים חוזרים לישראל. חוזרים לרמות שלפני המלחמה" },
       ],
     },
     highlights: {
