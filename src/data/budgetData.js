@@ -54,7 +54,7 @@ export const CATEGORIES = [
         { threshold: 12, severity: "critical", text: "ירידה חדה בביטחון הפנים. מפחיד להסתובב בלילה" },
       ],
       increase: [
-        { threshold: 5,  severity: "normal", text: "המשטרה מגייסת אלפי שוטרים חדשים, נגמרו התירוצים" },
+        { threshold: 5,  severity: "normal", text: "המשטרה מגייסת אלפי שוטרים חדשים. השוטר אזולאי - הקאמבק?" },
         { threshold: 12, severity: "normal", text: "הפקק בבתי הכלא משתחרר - אלפי מקומות כליאה חדשים" },
       ],
     },
@@ -186,13 +186,13 @@ export const CATEGORIES = [
     max: 40,
     insights: {
       decrease: [
-        { threshold: 3,  severity: "warning",  text: "המחיר לנסיעה עלה. שכר הדירה גם. שכר המינימום לא." },
-        { threshold: 8,  severity: "critical", text: "אוטובוסים מתייקרים, הסיוע בשכר דירה נעלם. תל אביב לעשירים בלבד." },
-        { threshold: 12, severity: "critical", text: "תחבורה ציבורית כמעט לא כדאית כלכלית. כולם חוזרים לפקק." },
+        { threshold: 3,  severity: "warning",  text: "הנסיעה ברכבת מתייקרת. השכר נשאר בתחנה" },
+        { threshold: 8,  severity: "critical", text: "התור לדיור ציבורי מתארך. הזכאים מוותרים על החלום" },
+        { threshold: 12, severity: "critical", text: "פרויקט דירה בהנחה נכנס לפריזר. חוזרים לרענן את יד2" },
       ],
       increase: [
-        { threshold: 5,  severity: "normal", text: "כרטיסיות מסובסדות. סטודנטים שמחים. לזמן קצר." },
-        { threshold: 14, severity: "normal", text: "אוטובוסים בר-השגה וסיוע בשכר דירה לצעירים. מהלך חברתי." },
+        { threshold: 5,  severity: "normal", text: "ההנחות ברב-קו ובאפליקציות מתרחבות. הסטודנטים שמחים. בינתיים" },
+        { threshold: 14, severity: "normal", text: "זינוק היסטורי בתדירות של קווי האוטובוס בנגב. הגמלים יוצאים לחל"ת" },
       ],
     },
     highlights: {
