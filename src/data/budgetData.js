@@ -186,9 +186,9 @@ export const CATEGORIES = [
     max: 40,
     insights: {
       decrease: [
-        { threshold: 3,  severity: "warning",  text: "הנסיעה ברכבת מתייקרת. השכר נשאר בתחנה" },
+        { threshold: 3,  severity: "warning",  text: "הנסיעה ברכבת מתייקרת, אבל השכר נשאר בתחנה" },
         { threshold: 8,  severity: "critical", text: "התור לדיור ציבורי מתארך. הזכאים מוותרים על החלום" },
-        { threshold: 12, severity: "critical", text: "פרויקט דירה בהנחה נכנס לפריזר. חוזרים לרענן את יד2" },
+        { threshold: 12, severity: "critical", text: "תוכנית דירה בהנחה נכנסת לפריזר. חוזרים ליד2" },
       ],
       increase: [
         { threshold: 5,  severity: "normal", text: "ההנחות ברב-קו ובאפליקציות מתרחבות. הסטודנטים שמחים. בינתיים" },
@@ -217,13 +217,13 @@ export const CATEGORIES = [
     max: 65,
     insights: {
       decrease: [
-        { threshold: 5,  severity: "warning",  text: "תושבי עוטף עזה ממשיכים לחכות. מה חדש." },
+        { threshold: 5,  severity: "warning",  text: "בצפון חיכו לחצי מיליארד לפיצוי עסקים? שימשיכו לחכות" },
         { threshold: 15, severity: "critical", text: "הבנייה מחדש מואטת. תקומה שאינה קמה." },
         { threshold: 18, severity: "critical", text: "השיקום הופך לחלום. רבים לא יחזרו." },
       ],
       increase: [
-        { threshold: 10, severity: "normal", text: "בנייה מחדש מואצת. 10,000 משפחות יוכלו לחזור הביתה." },
-        { threshold: 25, severity: "normal", text: "תקומה אמיתית. גם הצפון וגם עוטף רואים עתיד." },
+        { threshold: 10, severity: "normal", text: "עוברים לבנייה מואצת. 10,000 משפחות בדרך הביתה" },
+        { threshold: 25, severity: "normal", text: "יש כיסוי: התוכנית האסטרטגית לשיקום ישובי הגבול עם לבנון יוצאת לדרך" },
       ],
     },
     highlights: {
@@ -253,8 +253,8 @@ export const CATEGORIES = [
         { threshold: 20, severity: "critical", text: "ישראל תחתית OECD בתחבורה ציבורית. כמו תמיד. לנצח." },
       ],
       increase: [
-        { threshold: 10, severity: "normal", text: "מטרו מוקדם בשנתיים. אולי." },
-        { threshold: 25, severity: "normal", text: "רכבת מהירה ת\"א–ירושלים ב-30 דק. ציביליזציה!" },
+        { threshold: 10, severity: "normal", text: "הקו הירוק בת"א מקבל דחיפה קדימה. ניפגש באמצע 2028?" },
+        { threshold: 25, severity: "normal", text: "המטרו מקדים את לוחות הזמנים. החיבור לרעננה יוצא לדרך" },
         { threshold: 40, severity: "normal", text: "ישראל תגיע לממוצע אירופה בתחבורה. בערך ב-2040." },
       ],
     },
