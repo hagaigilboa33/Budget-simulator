@@ -192,7 +192,7 @@ export const CATEGORIES = [
       ],
       increase: [
         { threshold: 5,  severity: "normal", text: "ההנחות ברב-קו ובאפליקציות מתרחבות. הסטודנטים שמחים. בינתיים" },
-        { threshold: 14, severity: "normal", text: "זינוק היסטורי בתדירות של קווי האוטובוס בנגב. הגמלים יוצאים לחל"ת" },
+        { threshold: 14, severity: "normal", text: 'זינוק היסטורי בתדירות של קווי האוטובוס בנגב. הגמלים יוצאים לחל"ת' },
       ],
     },
     highlights: {
@@ -253,7 +253,7 @@ export const CATEGORIES = [
         { threshold: 20, severity: "critical", text: "ישראל בתחתית ה-OECD בתחבורה ציבורית. בסוף מתרגלים להכל" },
       ],
       increase: [
-        { threshold: 10, severity: "normal", text: "הקו הירוק בת"א מקבל דחיפה קדימה. ניפגש באמצע 2028?" },
+        { threshold: 10, severity: "normal", text: 'הקו הירוק בת"א מקבל דחיפה קדימה. ניפגש באמצע 2028?' },
         { threshold: 25, severity: "normal", text: "המטרו מקדים את לוחות הזמנים. החיבור לרעננה יוצא לדרך" },
         { threshold: 40, severity: "normal", text: "אימפריה! ישראל בדרך לסגור את פער התחבורה מול אירופה עד 2040" },
       ],
