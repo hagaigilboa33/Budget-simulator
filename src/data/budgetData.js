@@ -281,7 +281,7 @@ export const CATEGORIES = [
     max: 18,
     insights: {
       decrease: [
-        { threshold: 2, severity: "warning",  text: "חקלאים מוותרים. ירקות מיובאים. ישראל? אה כן." },
+        { threshold: 2, severity: "warning",  text: "גידול דגי אמנון עולה כבר 20 שקל לקילו. במצרים? פחות משליש" },
         { threshold: 4, severity: "critical", text: "תיירות ותעשייה ישלמו. הצמיחה — לא." },
       ],
       increase: [
