@@ -128,7 +128,7 @@ export default function LandingScreen({ onStart }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              יש לך <strong style={{ color: "#f1f5f9" }}>613 מיליארד שקל</strong> ו-2 דקות.
+              יש לך <strong style={{ color: "#f1f5f9" }}>613 מיליארד שקל</strong>.
               <br />קבע את סדר העדיפויות הבא של ישראל.
             </motion.p>
           )}
