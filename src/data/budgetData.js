@@ -310,13 +310,13 @@ export const CATEGORIES = [
     max: 45,
     insights: {
       decrease: [
-        { threshold: 3, severity: "warning",  text: "3,000 פחות פקידים. ומי יאשר לך את הבנייה? אחד." },
+        { threshold: 3, severity: "warning",  text: "3,000 פקידים הולכים הביתה - אבל יש הרבה יותר מקומות חנייה" },
         { threshold: 6, severity: "warning",  text: "ממשלה רזה. הרישוי לגן שלך? 3 שנים. במקרה הטוב." },
         { threshold: 11, severity: "critical", text: "הממשל כמעט לא קיים. אנרכיה? לא. פשוט עוד בירוקרטיה, רק ללא תקציב." },
       ],
       increase: [
-        { threshold: 4, severity: "normal", text: "3,000 עובדי מדינה נוספים. שורות קצרות יותר? אולי." },
-        { threshold: 10, severity: "normal", text: "דיגיטציה מלאה של שירותי הממשלה. בעשר שנה מישהו ישתמש." },
+        { threshold: 4, severity: "normal", text: "מאות שופטים חדשים מגויסים. הדיון שלכם מוקדם לשבוע הבא" },
+        { threshold: 10, severity: "normal", text: "דיגיטציה מלאה של שירותי הממשלה. ישראל מובילה עולמית בתחום" },
       ],
     },
     highlights: {
