@@ -281,7 +281,7 @@ export const CATEGORIES = [
     max: 18,
     insights: {
       decrease: [
-        { threshold: 2, severity: "warning",  text: "גידול דגי אמנון עולה כבר 20 שקל לקילו. במצרים? פחות משליש" },
+        { threshold: 2, severity: "warning",  text: 'כל מענקי התמיכה למלונות נמחקים. סעו לחו"ל' },
         { threshold: 4, severity: "critical", text: "המשרד להגנת הסביבה נסגר ל-4 שנים. המזהמים חוגגים" },
       ],
       increase: [
