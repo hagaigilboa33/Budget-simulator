@@ -282,7 +282,7 @@ export const CATEGORIES = [
     insights: {
       decrease: [
         { threshold: 2, severity: "warning",  text: "גידול דגי אמנון עולה כבר 20 שקל לקילו. במצרים? פחות משליש" },
-        { threshold: 4, severity: "critical", text: "המשרד להגנת הסביבה נסגר. תכף נשוב?" },
+        { threshold: 4, severity: "critical", text: "המשרד להגנת הסביבה נסגר ל-4 שנים. המזהמים חוגגים" },
       ],
       increase: [
         { threshold: 3, severity: "normal", text: "החקלאים מקבלים זריקת עידוד. לראשונה: קיווי בנגב" },
