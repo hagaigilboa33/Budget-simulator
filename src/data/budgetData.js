@@ -218,7 +218,7 @@ export const CATEGORIES = [
     insights: {
       decrease: [
         { threshold: 5,  severity: "warning",  text: "העסקים בצפון חיכו לחצי מיליארד? שימשיכו לחכות" },
-        { threshold: 15, severity: "critical", text: "קצב הבנייה מחדש מואט. התקומה לא קמה" },
+        { threshold: 15, severity: "critical", text: "מאמצי השיקום נבלמים, האטה בקצב הבנייה. לא תקומה ולא נעליים" },
         { threshold: 18, severity: "critical", text: "אלפים מתושבי הצפון מודיעים: לא נחזור הביתה" },
       ],
       increase: [
@@ -249,7 +249,7 @@ export const CATEGORIES = [
     insights: {
       decrease: [
         { threshold: 5,  severity: "warning",  text: "המטרו מתעכב ב-3 שנים. מעצמת איחורים עולמית" },
-        { threshold: 12, severity: "critical", text: "היעד של 30% אנרגיה מתחדשת נדחה ל-2032? בקרוב יידחה ל-2035" },
+        { threshold: 12, severity: "critical", text: "היעד של 30% אנרגיות מתחדשות נדחה ל-2032? בקרוב יידחה ל-2035" },
         { threshold: 20, severity: "critical", text: "ישראל בתחתית ה-OECD בתחבורה ציבורית. בסוף מתרגלים להכל" },
       ],
       increase: [
