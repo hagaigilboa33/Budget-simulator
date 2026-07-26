@@ -311,8 +311,8 @@ export const CATEGORIES = [
     insights: {
       decrease: [
         { threshold: 3, severity: "warning",  text: "3,000 פקידים הולכים הביתה - אבל יש הרבה יותר מקומות חנייה" },
-        { threshold: 6, severity: "warning",  text: "ממשלה רזה. הרישוי לגן שלך? 3 שנים. במקרה הטוב." },
-        { threshold: 11, severity: "critical", text: "הממשל כמעט לא קיים. אנרכיה? לא. פשוט עוד בירוקרטיה, רק ללא תקציב." },
+        { threshold: 6, severity: "warning",  text: "שגרירויות נסגרות, דיפלומטים מקוצצים. הכי טוב בארץ" },
+        { threshold: 11, severity: "critical", text: "פגיעה אנושה במשרדי הממשלה. יותר בירוקרטיה, רק בלי תקציב" },
       ],
       increase: [
         { threshold: 4, severity: "normal", text: "מאות שופטים חדשים מגויסים. הדיון שלכם מוקדם לשבוע הבא" },
