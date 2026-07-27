@@ -643,11 +643,11 @@ function OverrunModal({ overrun, state, onClose, onBreak, onFinish }) {
             <div style={css.modalTitle}>יש חריגה של {overrun} מיליארד שקל</div>
             <div style={css.modalSub}>מה ברצונך לעשות?</div>
             <div style={css.modalBtns}>
-              <button style={css.modalBtnFix} onClick={onClose}>
-                ← תקן את התקציב
+              <button style={{ ...css.modalBtnFix, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }} onClick={onClose}>
+                <span>תקן את התקציב</span><span style={{ fontSize: 22 }}>🔧</span>
               </button>
-              <button style={css.modalBtnBreak} onClick={onBreak}>
-                פרוץ את מסגרת התקציב
+              <button style={{ ...css.modalBtnBreak, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }} onClick={onBreak}>
+                <span>פרוץ את מסגרת התקציב</span><span style={{ fontSize: 22 }}>🥷</span>
               </button>
             </div>
           </>
@@ -1040,15 +1040,15 @@ const css = {
   modalBtns: { display: "flex", flexDirection: "column", gap: 10 },
   modalBtnFix: {
     width: "100%", padding: "14px",
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.12)",
-    color: "rgba(255,255,255,0.7)", fontSize: 15, fontWeight: 700,
+    background: "rgba(255,255,255,0.08)",
+    border: "1px solid rgba(255,255,255,0.18)",
+    color: "#fff", fontSize: 15, fontWeight: 700,
     borderRadius: 14, cursor: "pointer", letterSpacing: "-0.01em",
   },
   modalBtnBreak: {
     width: "100%", padding: "14px",
-    background: "rgba(255,255,255,0.1)",
-    border: "1px solid rgba(255,255,255,0.2)",
+    background: "rgba(255,255,255,0.08)",
+    border: "1px solid rgba(255,255,255,0.18)",
     color: "#fff", fontSize: 15, fontWeight: 700,
     borderRadius: 14, cursor: "pointer", letterSpacing: "-0.01em",
   },
