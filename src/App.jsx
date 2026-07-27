@@ -26,7 +26,10 @@ export default function App() {
 
   const handleBackToBudget = useCallback(() => setScreen("budget"), []);
 
-  const handleFinish  = useCallback(() => setScreen("result"), []);
+  const handleFinish  = useCallback((overrunFinancing = null) => {
+    if (overrunFinancing) setFinancingMethod(overrunFinancing);
+    setScreen("result");
+  }, []);
 
   const handleRestart = useCallback(() => {
     setValues(initValues());
