@@ -332,7 +332,7 @@ export default function ResultCard({ values, name, totalBudget, onRestart }) {
             {/* Two big numbers, each with its own sub-chip */}
             <div style={S.bigStatsRow}>
               <div style={S.bigStatBlock}>
-                <div style={S.bigStatLabel}>גודל התקציב</div>
+                <div style={S.bigStatLabel}>התקציב בפועל</div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: 4, direction: "rtl" }}>
                   <span style={S.bigStatNum}>{effectiveBudget}</span>
                   <span style={S.bigStatUnit}>מיליארד ₪</span>
