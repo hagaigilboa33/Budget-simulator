@@ -351,12 +351,14 @@ function CategoryCard({ cat, value, onChange, totalBudget, values, currentIdx })
       {/* Slider */}
       <BigSlider cat={cat} value={value} onChange={onChange} />
 
-      {/* Range labels */}
-      <div style={{ display: "flex", justifyContent: "space-between", direction: "ltr", marginTop: 10 }}>
-        <span dir="ltr" style={{ ...css.rangeLabel, display: "inline-flex", gap: "0.3em" }}><span>0</span><span>מיליארד</span></span>
-        <span dir="ltr" style={{ ...css.rangeLabel, color: "#334155", display: "inline-flex", gap: "0.3em" }}><span>▲ {cat.current}</span><span>מיליארד</span></span>
-        <span dir="ltr" style={{ ...css.rangeLabel, display: "inline-flex", gap: "0.3em" }}><span>{cat.max}</span><span>מיליארד</span></span>
-      </div>
+      {/* Range labels — gov notch label positioned at its actual location on the track */}
+      {(() => { const gPct = (cat.current / cat.max) * 100; return (
+        <div style={{ position: "relative", height: 18, direction: "ltr", marginTop: 10 }}>
+          <span dir="ltr" style={{ ...css.rangeLabel, position: "absolute", left: 0, display: "inline-flex", gap: "0.3em" }}><span>0</span><span>מיליארד</span></span>
+          <span dir="ltr" style={{ ...css.rangeLabel, color: "#334155", position: "absolute", left: `${gPct}%`, transform: "translateX(-50%)", display: "inline-flex", gap: "0.3em", whiteSpace: "nowrap" }}><span>▲ {cat.current}</span><span>מיליארד</span></span>
+          <span dir="ltr" style={{ ...css.rangeLabel, position: "absolute", right: 0, display: "inline-flex", gap: "0.3em" }}><span>{cat.max}</span><span>מיליארד</span></span>
+        </div>
+      ); })()}
 
       {/* Details toggle */}
       {breakdown.length > 0 && (

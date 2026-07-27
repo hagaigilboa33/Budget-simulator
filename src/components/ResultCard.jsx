@@ -79,11 +79,16 @@ function buildAnalysis(withDelta, deficit, totalBudget, overUnder) {
     s2 = `חרגת ב-${overUnder} מיליארד שקל מעבר לתקציב שקבעת, מה שיחייב לאשר את התקציב פעם נוספת בכנסת ולהעלות מסים או לקחת הלוואות על חשבון הדור הבא`;
 
   /* משפט 3: גירעון */
-  const deficitLabel = deficit <= GOV_DEFICIT ? "נמוך"
-    : deficit <= 5   ? "סביר"
-    : deficit <= 7   ? "גבוה"
-    : "קיצוני";
-  const s3 = `בסך הכל, רשמת גירעון ${deficitLabel} של ${deficit}% ביחס ליעד הגירעון הקבוע בחוק ל-2027 (${GOV_DEFICIT}%)`;
+  let s3;
+  if (Math.abs(deficit - GOV_DEFICIT) < 0.05) {
+    s3 = `בסך הכל, רשמת גירעון של ${deficit}% — בדיוק כמו יעד הגירעון הקבוע בחוק ל-2027`;
+  } else {
+    const deficitLabel = deficit < GOV_DEFICIT ? "נמוך"
+      : deficit <= 5 ? "סביר"
+      : deficit <= 7 ? "גבוה"
+      : "קיצוני";
+    s3 = `בסך הכל, רשמת גירעון ${deficitLabel} של ${deficit}% ביחס ליעד הגירעון הקבוע בחוק ל-2027 (${GOV_DEFICIT}%)`;
+  }
 
   /* משפט 4: סדר עדיפויות */
   const allChanges = [...withDelta]
