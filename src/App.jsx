@@ -24,7 +24,8 @@ export default function App() {
     setScreen("builder");
   }, []);
 
-  const handleBackToBudget = useCallback(() => setScreen("budget"), []);
+  const handleBackToBudget    = useCallback(() => setScreen("budget"),   []);
+  const handleBackToBuilder   = useCallback(() => setScreen("builder"),  []);
 
   const handleFinish  = useCallback(() => setScreen("result"), []);
 
@@ -41,7 +42,7 @@ export default function App() {
         <LandingScreen onStart={handleStart} />
       )}
       {screen === "budget" && (
-        <BudgetScreen onBudgetSet={handleBudgetSet} />
+        <BudgetScreen onBudgetSet={handleBudgetSet} onBack={handleBackToBuilder} />
       )}
       {screen === "builder" && (
         <BudgetBuilder

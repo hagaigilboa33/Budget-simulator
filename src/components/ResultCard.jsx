@@ -65,20 +65,18 @@ function buildAnalysis(withDelta, deficit, totalBudget, overUnder) {
   /* משפט 1: גודל התקציב */
   let s1;
   if (Math.abs(budgetDiff) < 5)
-    s1 = `לא שינית את גודל התקציב לעומת מחויבויות הממשלה ל-2027`;
+    s1 = "";
   else if (budgetDiff > 0)
     s1 = `הגדלת את התקציב ב-${budgetDiff} מיליארד לעומת מחויבויות הממשלה ל-2027, ל-${totalBudget} מיליארד שקל`;
   else
     s1 = `הקטנת את התקציב ב-${Math.abs(budgetDiff)} מיליארד לעומת מחויבויות הממשלה ל-2027, ל-${totalBudget} מיליארד שקל`;
 
   /* משפט 2: כמה חולק מהתקציב שנקבע */
-  let s2;
-  if (Math.abs(overUnder) < 1)
-    s2 = `חילקת את התקציב במדויק`;
-  else if (overUnder < 0)
+  let s2 = "";
+  if (overUnder < -1)
     s2 = `נותרו ${Math.abs(overUnder)} מיליארד שקל שלא חולקו מהתקציב שקבעת`;
-  else
-    s2 = `חרגת ב-${overUnder} מיליארד שקל מעבר לתקציב שקבעת`;
+  else if (overUnder > 1)
+    s2 = `חרגת ב-${overUnder} מיליארד שקל מעבר לתקציב שקבעת, מה שיחייב לאשר את התקציב פעם נוספת בכנסת ולהעלות מסים או לקחת הלוואות על חשבון הדור הבא`;
 
   /* משפט 3: גירעון */
   const deficitLabel = deficit <= GOV_DEFICIT ? "נמוך"
@@ -122,7 +120,7 @@ function buildAnalysis(withDelta, deficit, totalBudget, overUnder) {
     },
     welfare: {
       up:   `הרחבת רשת הביטחון הסוציאלי מפחיתה אי-שוויון ומסייעת לאוכלוסיות חלשות, אך מחייבת מקורות מימון מתמשכים.`,
-      down: `קיצוץ בתקציבי הרווחה עלול להרחיב פערים חברתיים ולגדיל את שיעורי העוני, בייחוד בקרב אוכלוסיות חלשות.`,
+      down: `קיצוץ בתקציבי הרווחה עלול להרחיב פערים חברתיים ולהגדיל את שיעורי העוני, בייחוד בקרב אוכלוסיות חלשות.`,
     },
     transit_housing: {
       up:   `השקעה בתחבורה ציבורית ודיור מסייעת להוזלת יוקר המחיה ולשיפור הנגישות לשוק העבודה.`,
@@ -157,7 +155,34 @@ function buildAnalysis(withDelta, deficit, totalBudget, overUnder) {
     s5 = ` ${IMPLICATIONS[topChange.id]?.[dir] ?? ""}`;
   }
 
-  return `${s1}. ${s2}. ${s3}. ${s4}${s5}`;
+  /* משפט 6: משרדים שאופסו לחלוטין */
+  const ZERO_MEANING = {
+    defense:          "הצבא מפסיק לתפקד",
+    national_security:"המשטרה והכבאות קורסים",
+    education:        "מערכת החינוך נסגרת",
+    health:           "בתי החולים הציבוריים נסגרים",
+    welfare:          "כל הקצבאות ורשת הביטחון הסוציאלי נמחקים",
+    transit_housing:  "התחבורה הציבורית והדיור הציבורי קורסים",
+    rehabilitation:   "תוכניות השיקום נסגרות לחלוטין",
+    infrastructure:   "תשתיות המדינה מפסיקות לקבל תחזוקה",
+    economy:          "התמיכה בחקלאות ובתיירות מסתיימת",
+    government:       "שירותי הממשל נסגרים",
+  };
+  const zeroed = withDelta.filter(c => c.value === 0);
+  let s6 = "";
+  if (zeroed.length === 1) {
+    const meaning = ZERO_MEANING[zeroed[0].id] ?? "";
+    s6 = `ביטלת לחלוטין את תקציב ${zeroed[0].label}${meaning ? ` — ${meaning}` : ""}`;
+  } else if (zeroed.length > 1) {
+    const names = zeroed.map(c => c.label).join(", ");
+    s6 = `ביטלת לחלוטין את תקציבי ${names} — כולם מפסיקים לתפקד!`;
+  }
+
+  return [s1, s2, s3, s6, s4 + s5].filter(Boolean).reduce((acc, cur, i) => {
+    if (i === 0) return cur;
+    const sep = /[!?]$/.test(acc) ? " " : ". ";
+    return acc + sep + cur;
+  }, "");
 }
 
 /* ═══════════════════════════════════
@@ -389,7 +414,6 @@ export default function ResultCard({ values, name, totalBudget, onRestart }) {
           </div>
         </div>
 
-        {/* SHARE BUTTONS */}
         <div style={S.actions}>
           <div style={S.shareTitle}>שתף את התקציב שלך</div>
           <div style={S.shareGrid}>

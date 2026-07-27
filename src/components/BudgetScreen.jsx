@@ -66,7 +66,7 @@ const FINANCING = [
   },
 ];
 
-export default function BudgetScreen({ onBudgetSet }) {
+export default function BudgetScreen({ onBudgetSet, onBack }) {
   const [budget,   setBudget]   = useState(REVENUE);
   const [showModal, setShowModal] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -328,7 +328,7 @@ export default function BudgetScreen({ onBudgetSet }) {
       {/* Financing Modal */}
       <AnimatePresence>
         {showModal && (
-          <FinancingModal gap={gap} selected={selected} onSelect={handleFinancing} />
+          <FinancingModal gap={gap} selected={selected} onSelect={handleFinancing} onBack={onBack} />
         )}
       </AnimatePresence>
     </div>
@@ -338,7 +338,7 @@ export default function BudgetScreen({ onBudgetSet }) {
 /* ─────────────────────────────────────
    FINANCING MODAL
 ───────────────────────────────────── */
-function FinancingModal({ gap, selected, onSelect }) {
+function FinancingModal({ gap, selected, onSelect, onBack }) {
   return (
     <motion.div
       style={S.overlay}
@@ -373,6 +373,11 @@ function FinancingModal({ gap, selected, onSelect }) {
                   </motion.button>
                 ))}
               </div>
+              {onBack && (
+                <button style={S.modalBackLink} onClick={onBack}>
+                  → חזור לחלוקת התקציב
+                </button>
+              )}
             </motion.div>
           ) : (
             <motion.div
@@ -646,6 +651,21 @@ const S = {
   },
   optionEmoji: { fontSize: 26, flexShrink: 0 },
   optionLabel: { fontSize: 18, fontWeight: 700, color: "#f1f5f9", letterSpacing: "-0.02em" },
+
+  modalBackLink: {
+    display: "block",
+    marginTop: 16,
+    background: "none",
+    border: "none",
+    color: "rgba(255,255,255,0.3)",
+    fontSize: 13,
+    fontWeight: 500,
+    cursor: "pointer",
+    textDecoration: "underline",
+    fontFamily: "'Inter', system-ui, sans-serif",
+    width: "100%",
+    textAlign: "center",
+  },
 
   /* Cynical response */
   cynicalWrap: { padding: "4px 0" },

@@ -6,15 +6,20 @@ import { CATEGORIES, getInsight, CATEGORY_BREAKDOWN } from "../data/budgetData";
    MAIN
 ───────────────────────────────────── */
 export default function BudgetBuilder({ values, setValues, onFinish, onBack, name, totalBudget = 613 }) {
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const [insight,    setInsight]    = useState(null);
-  const [flash,      setFlash]      = useState(null);
+  const [currentIdx,   setCurrentIdx]   = useState(0);
+  const [insight,      setInsight]      = useState(null);
+  const [flash,        setFlash]        = useState(null);
+  const [overrunModal, setOverrunModal] = useState(null); // null | "question" | "breaking"
   const timer          = useRef(null);
   const flashTimer     = useRef(null);
   const currentCatIdRef = useRef(CATEGORIES[0].id);
 
   const cat       = CATEGORIES[currentIdx];
   const isLast    = currentIdx === CATEGORIES.length - 1;
+
+  const POOL          = totalBudget - 103;
+  const totalAllocated = CATEGORIES.reduce((s, c) => s + values[c.id], 0);
+  const overrun       = Math.max(0, totalAllocated - POOL);
 
   const triggerFlash = (level) => {
     clearTimeout(flashTimer.current);
@@ -25,7 +30,7 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
   const handleChange = useCallback((raw, catId) => {
     if (catId !== currentCatIdRef.current) return; // stale slider call — ignore
     const cat   = CATEGORIES.find(c => c.id === catId);
-    const val   = Math.round(Math.max(cat.min, Math.min(cat.max, raw)));
+    const val   = Math.round(Math.max(0, Math.min(cat.max, raw)));
     const delta = val - cat.current;
     setValues(prev => ({ ...prev, [cat.id]: val }));
     const ins = getInsight(cat, delta);
@@ -53,7 +58,10 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
       setInsight(null);
       clearTimeout(timer.current);
       setCurrentIdx(nextIdx);
-    } else { onFinish(); }
+    } else {
+      if (overrun > 0) setOverrunModal("question");
+      else onFinish();
+    }
   };
 
   const handleBack = () => {
@@ -202,6 +210,18 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
         </div>
 
       </div>
+
+      <AnimatePresence>
+        {overrunModal && (
+          <OverrunModal
+            overrun={overrun}
+            state={overrunModal}
+            onClose={() => setOverrunModal(null)}
+            onBreak={() => setOverrunModal("breaking")}
+            onFinish={onFinish}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -289,9 +309,21 @@ function CategoryCard({ cat, value, onChange, totalBudget, values, currentIdx })
       </div>
 
       {/* Stats strip */}
-      <div style={css.statsStrip}>
+      <motion.div
+        style={css.statsStrip}
+        animate={remaining < 0 ? {
+          boxShadow: ["0 0 0px rgba(248,113,113,0)", "0 0 18px rgba(248,113,113,0.55)", "0 0 0px rgba(248,113,113,0)"],
+          borderColor: ["rgba(248,113,113,0.3)", "rgba(248,113,113,0.75)", "rgba(248,113,113,0.3)"],
+        } : {
+          boxShadow: "0 0 0px rgba(0,0,0,0)",
+          borderColor: "rgba(255,255,255,0.07)",
+        }}
+        transition={remaining < 0 ? { duration: 1.1, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
+      >
         <div style={css.statsLeft}>
-          <div style={css.statsTitle}>נותר לחלוקה</div>
+          <div style={{ ...css.statsTitle, color: remaining < 0 ? "#F87171" : undefined }}>
+            {remaining < 0 ? "⚠ שים לב" : "נותר לחלוקה"}
+          </div>
           <motion.div
             key={Math.abs(remaining)}
             style={{
@@ -314,14 +346,14 @@ function CategoryCard({ cat, value, onChange, totalBudget, values, currentIdx })
           )}
         </div>
         <MiniPie segments={pieSegments} total={PIE_TOTAL} currentIdx={currentIdx} size={66} />
-      </div>
+      </motion.div>
 
       {/* Slider */}
       <BigSlider cat={cat} value={value} onChange={onChange} />
 
       {/* Range labels */}
       <div style={{ display: "flex", justifyContent: "space-between", direction: "ltr", marginTop: 10 }}>
-        <span dir="ltr" style={{ ...css.rangeLabel, display: "inline-flex", gap: "0.3em" }}><span>{cat.min}</span><span>מיליארד</span></span>
+        <span dir="ltr" style={{ ...css.rangeLabel, display: "inline-flex", gap: "0.3em" }}><span>0</span><span>מיליארד</span></span>
         <span dir="ltr" style={{ ...css.rangeLabel, color: "#334155", display: "inline-flex", gap: "0.3em" }}><span>▲ {cat.current}</span><span>מיליארד</span></span>
         <span dir="ltr" style={{ ...css.rangeLabel, display: "inline-flex", gap: "0.3em" }}><span>{cat.max}</span><span>מיליארד</span></span>
       </div>
@@ -392,8 +424,8 @@ function CategoryCard({ cat, value, onChange, totalBudget, values, currentIdx })
    BIG SLIDER
 ───────────────────────────────────── */
 function BigSlider({ cat, value, onChange }) {
-  const pct    = ((value - cat.min) / (cat.max - cat.min)) * 100;
-  const govPct = ((cat.current - cat.min) / (cat.max - cat.min)) * 100;
+  const pct    = (value / cat.max) * 100;
+  const govPct = (cat.current / cat.max) * 100;
   const trackRef  = useRef(null);
   const dragging  = useRef(false);
   const cleanupFn = useRef(null); // called on unmount to remove stale window listeners
@@ -403,7 +435,7 @@ function BigSlider({ cat, value, onChange }) {
 
   const getVal = clientX => {
     const r = trackRef.current.getBoundingClientRect();
-    return cat.min + Math.max(0, Math.min(1, (clientX - r.left) / r.width)) * (cat.max - cat.min);
+    return Math.max(0, Math.min(1, (clientX - r.left) / r.width)) * cat.max;
   };
 
   const onMouseDown = e => {
@@ -565,6 +597,57 @@ function MiniPie({ segments, total, currentIdx, size = 66 }) {
         );
       })}
     </svg>
+  );
+}
+
+/* ─────────────────────────────────────
+   OVERRUN MODAL
+───────────────────────────────────── */
+function OverrunModal({ overrun, state, onClose, onBreak, onFinish }) {
+  return (
+    <motion.div
+      style={css.overlay}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+    >
+      <motion.div
+        style={css.modal}
+        initial={{ opacity: 0, scale: 0.92, y: 28 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.92, y: 28 }}
+        transition={{ type: "spring", stiffness: 320, damping: 28 }}
+      >
+        {state === "question" && (
+          <>
+            <div style={css.modalIcon}>⚠️</div>
+            <div style={css.modalTitle}>יש חריגה של {overrun} מיליארד שקל</div>
+            <div style={css.modalSub}>מה ברצונך לעשות?</div>
+            <div style={css.modalBtns}>
+              <button style={css.modalBtnFix} onClick={onClose}>
+                ← תקן את התקציב
+              </button>
+              <button style={css.modalBtnBreak} onClick={onBreak}>
+                פרוץ את מסגרת התקציב
+              </button>
+            </div>
+          </>
+        )}
+        {state === "breaking" && (
+          <>
+            <div style={css.modalIcon}>🏛️</div>
+            <div style={css.modalTitle}>פריצת מסגרת התקציב</div>
+            <div style={css.modalExplain}>
+              כדי לאשר חריגה של <strong style={{ color: "#F87171" }}>{overrun} מיליארד שקל</strong>, עליך להעביר את התקציב שוב בכנסת ולמצוא מקורות מימון נוספים — העלאת מסים או נטילת הלוואות.
+            </div>
+            <button style={css.modalBtnBreak} onClick={onFinish}>
+              המשך לתוצאות ←
+            </button>
+          </>
+        )}
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -906,4 +989,49 @@ const css = {
     padding: "12px 0 0",
   },
   defBarSep: { color: "rgba(255,255,255,0.15)" },
+
+  /* Overrun modal */
+  overlay: {
+    position: "fixed", inset: 0, zIndex: 300,
+    background: "rgba(0,0,0,0.75)",
+    backdropFilter: "blur(6px)",
+    display: "flex", alignItems: "center", justifyContent: "center",
+    padding: "0 20px",
+  },
+  modal: {
+    background: "#0D1525",
+    border: "1px solid rgba(255,255,255,0.1)",
+    borderRadius: 22,
+    padding: "32px 28px",
+    maxWidth: 420, width: "100%",
+    textAlign: "center",
+    boxShadow: "0 40px 100px rgba(0,0,0,0.8)",
+  },
+  modalIcon: { fontSize: 40, marginBottom: 16 },
+  modalTitle: {
+    fontSize: "clamp(18px, 4.5vw, 22px)", fontWeight: 800,
+    color: "#fff", letterSpacing: "-0.02em", marginBottom: 8, lineHeight: 1.3,
+  },
+  modalSub: {
+    fontSize: 14, color: "rgba(255,255,255,0.45)", fontWeight: 500, marginBottom: 24,
+  },
+  modalExplain: {
+    fontSize: 14, color: "rgba(255,255,255,0.55)", fontWeight: 500,
+    lineHeight: 1.7, marginBottom: 28, textAlign: "right",
+  },
+  modalBtns: { display: "flex", flexDirection: "column", gap: 10 },
+  modalBtnFix: {
+    width: "100%", padding: "14px",
+    background: "rgba(255,255,255,0.06)",
+    border: "1px solid rgba(255,255,255,0.12)",
+    color: "rgba(255,255,255,0.7)", fontSize: 15, fontWeight: 700,
+    borderRadius: 14, cursor: "pointer", letterSpacing: "-0.01em",
+  },
+  modalBtnBreak: {
+    width: "100%", padding: "14px",
+    background: "rgba(255,255,255,0.1)",
+    border: "1px solid rgba(255,255,255,0.2)",
+    color: "#fff", fontSize: 15, fontWeight: 700,
+    borderRadius: 14, cursor: "pointer", letterSpacing: "-0.01em",
+  },
 };
