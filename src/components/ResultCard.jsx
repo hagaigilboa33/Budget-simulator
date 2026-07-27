@@ -99,18 +99,26 @@ function buildAnalysis(withDelta, deficit, totalBudget, overUnder) {
   const allChanges = [...withDelta]
     .filter(c => Math.abs(c.delta) >= 3)
     .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
-  const increased = allChanges.filter(c => c.delta >= 3).slice(0, 2);
-  const decreased = allChanges.filter(c => c.delta <= -3).slice(0, 2);
+  const increased = allChanges.filter(c => c.delta >= 3);
+  const decreased = allChanges.filter(c => c.delta <= -3);
 
   let s4;
   if (increased.length === 0 && decreased.length === 0) {
     s4 = `שמרת על חלוקת התקציב קרובה למחויבויות הממשלה ל-2027.`;
+  } else if (increased.length >= 7 && decreased.length === 0) {
+    const scope = increased.length === CATEGORIES.length ? "בכל תחומי המדינה" : "כמעט בכל התחומים";
+    const top3 = increased.slice(0, 3).map(c => c.shortLabel).join(", ");
+    s4 = `הגדלת תקציבים ${scope} — ${top3} קיבלו את הגדלות הגדולות ביותר.`;
+  } else if (decreased.length >= 7 && increased.length === 0) {
+    const scope = decreased.length === CATEGORIES.length ? "מכל תחומי המדינה" : "מכמעט כל התחומים";
+    const top3 = decreased.slice(0, 3).map(c => c.shortLabel).join(", ");
+    s4 = `קיצצת תקציבים ${scope} — ${top3} ספגו את הקיצוצים הגדולים ביותר.`;
   } else {
     const parts = [];
     if (increased.length > 0)
-      parts.push(`יותר כסף ל${increased.map(c => c.shortLabel).join(" ול")}`);
+      parts.push(`יותר כסף ל${increased.slice(0, 2).map(c => c.shortLabel).join(" ול")}`);
     if (decreased.length > 0)
-      parts.push(`פחות כסף ל${decreased.map(c => c.shortLabel).join(" ול")}`);
+      parts.push(`פחות כסף ל${decreased.slice(0, 2).map(c => c.shortLabel).join(" ול")}`);
     s4 = `סדר העדיפויות שלך: ${parts.join(", ")}.`;
   }
 
