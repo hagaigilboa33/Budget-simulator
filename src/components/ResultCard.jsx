@@ -67,14 +67,16 @@ function buildAnalysis(withDelta, deficit, totalBudget, overUnder) {
   if (Math.abs(budgetDiff) < 5)
     s1 = "";
   else if (budgetDiff > 0)
-    s1 = `הגדלת את התקציב ב-${budgetDiff} מיליארד לעומת מחויבויות הממשלה ל-2027, ל-${totalBudget} מיליארד שקל`;
+    s1 = `הגדלת את התקציב ב-${budgetDiff} מיליארד לעומת מחויבויות הממשלה ל-2027 ל-${totalBudget} מיליארד שקל`;
   else
-    s1 = `הקטנת את התקציב ב-${Math.abs(budgetDiff)} מיליארד לעומת מחויבויות הממשלה ל-2027, ל-${totalBudget} מיליארד שקל`;
+    s1 = `הקטנת את התקציב ב-${Math.abs(budgetDiff)} מיליארד לעומת מחויבויות הממשלה ל-2027 ל-${totalBudget} מיליארד שקל`;
 
   /* משפט 2: כמה חולק מהתקציב שנקבע */
   let s2 = "";
-  if (overUnder < -1)
-    s2 = `נותרו ${Math.abs(overUnder)} מיליארד שקל שלא חולקו מהתקציב שקבעת`;
+  if (overUnder < -1) {
+    const actualBudget = Math.round(totalBudget + overUnder);
+    s2 = `נותרו ${Math.abs(overUnder)} מיליארד שקל שלא חולקו מהתקציב שקבעת — כלומר התקציב בפועל עמד על ${actualBudget} מיליארד שקל`;
+  }
   else if (overUnder > 1)
     s2 = `חרגת ב-${overUnder} מיליארד שקל מעבר לתקציב שקבעת, מה שיחייב לאשר את התקציב פעם נוספת בכנסת ולהעלות מסים או לקחת הלוואות על חשבון הדור הבא`;
 

@@ -6,18 +6,25 @@ import { CATEGORIES, getInsight, CATEGORY_BREAKDOWN } from "../data/budgetData";
    MAIN
 ───────────────────────────────────── */
 export default function BudgetBuilder({ values, setValues, onFinish, onBack, name, totalBudget = 613 }) {
-  const [currentIdx,   setCurrentIdx]   = useState(0);
-  const [insight,      setInsight]      = useState(null);
-  const [flash,        setFlash]        = useState(null);
-  const [overrunModal, setOverrunModal] = useState(null); // null | "question" | "breaking"
-  const timer          = useRef(null);
-  const flashTimer     = useRef(null);
+  const POOL = totalBudget - 103;
+
+  const [currentIdx,    setCurrentIdx]    = useState(0);
+  const [maxVisitedIdx, setMaxVisitedIdx] = useState(0);
+  // remaining: state מפורש — יורד רק כשמגיעים לכרטיסיה חדשה או כשמשנים סליידר
+  // מאותחל לפי הערך בפועל (לא ברירת מחדל) כי המשתמש אולי שינה בפעם קודמת
+  const [remaining,     setRemaining]     = useState(() => POOL - values[CATEGORIES[0].id]);
+  const [insight,       setInsight]       = useState(null);
+  const [flash,         setFlash]         = useState(null);
+  const [overrunModal,  setOverrunModal]  = useState(null); // null | "question" | "breaking"
+  const timer           = useRef(null);
+  const flashTimer      = useRef(null);
   const currentCatIdRef = useRef(CATEGORIES[0].id);
+  // ערך "הקודם" של הקטגוריה הנוכחית — לחישוב דלתא כשמשנים סליידר
+  const prevCatValueRef = useRef(values[CATEGORIES[0].id]);
 
   const cat       = CATEGORIES[currentIdx];
   const isLast    = currentIdx === CATEGORIES.length - 1;
 
-  const POOL          = totalBudget - 103;
   const totalAllocated = CATEGORIES.reduce((s, c) => s + values[c.id], 0);
   const overrun       = Math.max(0, totalAllocated - POOL);
 
@@ -29,9 +36,12 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
 
   const handleChange = useCallback((raw, catId) => {
     if (catId !== currentCatIdRef.current) return; // stale slider call — ignore
-    const cat   = CATEGORIES.find(c => c.id === catId);
-    const val   = Math.round(Math.max(0, Math.min(cat.max, raw)));
-    const delta = val - cat.current;
+    const cat    = CATEGORIES.find(c => c.id === catId);
+    const val    = Math.round(Math.max(0, Math.min(cat.max, raw)));
+    const delta  = val - cat.current;
+    const diff   = val - prevCatValueRef.current; // כמה השתנה מהערך הקודם
+    prevCatValueRef.current = val;
+    if (diff !== 0) setRemaining(r => r - diff);
     setValues(prev => ({ ...prev, [cat.id]: val }));
     const ins = getInsight(cat, delta);
     if (ins) {
@@ -52,11 +62,19 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
 
   const handleNext = () => {
     if (!isLast) {
-      const nextIdx = currentIdx + 1;
-      // Update ref SYNCHRONOUSLY before any pending touch events can fire
-      currentCatIdRef.current = CATEGORIES[nextIdx].id;
+      const nextIdx  = currentIdx + 1;
+      const nextCat  = CATEGORIES[nextIdx];
+      const nextVal  = values[nextCat.id]; // ערך הקטגוריה הבאה (ברירת מחדל בביקור ראשון)
+      currentCatIdRef.current = nextCat.id;
       setInsight(null);
       clearTimeout(timer.current);
+      if (nextIdx > maxVisitedIdx) {
+        // ביקור ראשון — מנכים את ערך הכרטיסיה הבאה מהנותר
+        setRemaining(r => r - nextVal);
+        setMaxVisitedIdx(nextIdx);
+      }
+      // prevCatValueRef מכוון לערך הנוכחי של הכרטיסיה שאליה עוברים
+      prevCatValueRef.current = nextVal;
       setCurrentIdx(nextIdx);
     } else {
       if (overrun > 0) setOverrunModal("question");
@@ -68,9 +86,12 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
     if (currentIdx > 0) {
       const prevIdx = currentIdx - 1;
       currentCatIdRef.current = CATEGORIES[prevIdx].id;
+      // prevCatValueRef מכוון לערך הנוכחי של הכרטיסיה שאליה חוזרים
+      prevCatValueRef.current = values[CATEGORIES[prevIdx].id];
       setInsight(null);
       clearTimeout(timer.current);
       setCurrentIdx(prevIdx);
+      // remaining לא משתנה — זה ה-behavior הנכון
     } else {
       onBack?.();
     }
@@ -170,6 +191,7 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
               totalBudget={totalBudget}
               values={values}
               currentIdx={currentIdx}
+              remaining={remaining}
             />
           </motion.div>
         </AnimatePresence>
@@ -229,7 +251,7 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
 /* ─────────────────────────────────────
    CATEGORY CARD
 ───────────────────────────────────── */
-function CategoryCard({ cat, value, onChange, totalBudget, values, currentIdx }) {
+function CategoryCard({ cat, value, onChange, totalBudget, values, currentIdx, remaining }) {
   const [showBreakdown, setShowBreakdown] = useState(false);
   const delta     = Math.round(value - cat.current);
   const isChanged = Math.abs(delta) >= 1;
@@ -237,13 +259,7 @@ function CategoryCard({ cat, value, onChange, totalBudget, values, currentIdx })
   const defColor  = cat.color;
   const breakdown = CATEGORY_BREAKDOWN[cat.id] || [];
 
-  // pool = תקציב השחקן פחות ההוצאות הקבועות (103)
-  const POOL       = totalBudget - 103;  // e.g. 613 - 103 = 510
   const PIE_TOTAL  = totalBudget;        // עיגול מלא = תקציב השחקן
-
-  // נותר לחלוקה: Pool - סכום כל הקטגוריות (תמיד גלובלי, עקבי בכל כיוון ניווט)
-  const allocatedSoFar = CATEGORIES.reduce((s, c) => s + values[c.id], 0);
-  const remaining = POOL - allocatedSoFar;
 
   // נתחי הפאי: "אחר" קבוע (103) + כל הקטגוריות עד כה
   const pieSegments = [

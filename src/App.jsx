@@ -21,6 +21,7 @@ export default function App() {
   const handleBudgetSet = useCallback((total, method) => {
     setTotalBudget(total);
     setFinancingMethod(method);
+    setValues(initValues()); // אפס את כל הקטגוריות לברירות המחדל של 2027
     setScreen("builder");
   }, []);
 
