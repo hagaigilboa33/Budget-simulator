@@ -53,7 +53,7 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
         if (prev && prev.text === ins.text && prev.catId === cat.id) return prev;
         return { text: ins.text, emoji: cat.emoji, color: cat.color, severity: ins.severity, id: Date.now(), catId: cat.id };
       });
-      if (delta < 0) {
+      if (diff < 0) {
         if (ins.severity === "critical") triggerFlash("critical");
         else if (ins.severity === "warning") triggerFlash("warning");
       }
