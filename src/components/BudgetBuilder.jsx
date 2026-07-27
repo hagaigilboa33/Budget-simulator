@@ -2,28 +2,19 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CATEGORIES, getInsight, CATEGORY_BREAKDOWN } from "../data/budgetData";
 
-const FINANCING_OPTS = [
-  { id: "taxes", emoji: "💰", label: "אעלה מיסים", cynical: "עוד 1% במע\"מ שווה למדינה 7 מיליארד שקל, אבל מי סופר" },
-  { id: "loans", emoji: "🏦", label: "אקח הלוואות", cynical: "הריבית כבר עולה 65 מיליארד שקל בשנה. הדור הבא ישלם" },
-];
-
 /* ─────────────────────────────────────
    MAIN
 ───────────────────────────────────── */
 export default function BudgetBuilder({ values, setValues, onFinish, onBack, name, totalBudget = 613 }) {
-  const [currentIdx,   setCurrentIdx]   = useState(0);
-  const [insight,      setInsight]      = useState(null);
-  const [flash,        setFlash]        = useState(null);
-  const [overrunModal, setOverrunModal] = useState(null);
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [insight,    setInsight]    = useState(null);
+  const [flash,      setFlash]      = useState(null);
   const timer          = useRef(null);
   const flashTimer     = useRef(null);
   const currentCatIdRef = useRef(CATEGORIES[0].id);
 
   const cat       = CATEGORIES[currentIdx];
   const isLast    = currentIdx === CATEGORIES.length - 1;
-  const POOL      = totalBudget - 103;
-  const totalAllocated = CATEGORIES.reduce((s, c) => s + values[c.id], 0);
-  const overrun   = Math.max(0, totalAllocated - POOL);
 
   const triggerFlash = (level) => {
     clearTimeout(flashTimer.current);
@@ -62,10 +53,7 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
       setInsight(null);
       clearTimeout(timer.current);
       setCurrentIdx(nextIdx);
-    } else {
-      if (overrun > 0) setOverrunModal("question");
-      else onFinish();
-    }
+    } else { onFinish(); }
   };
 
   const handleBack = () => {
@@ -178,26 +166,6 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
           </motion.div>
         </AnimatePresence>
 
-        {/* Overrun warning banner */}
-        <AnimatePresence>
-          {isLast && overrun > 0 && (
-            <motion.div
-              style={css.overrunBanner}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 8 }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.span
-                animate={{ opacity: [1, 0.35, 1] }}
-                transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
-              >
-                ⚠ חריגה של {overrun} מיליארד שקל מעל התקציב
-              </motion.span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* Back / Next buttons */}
         <div style={css.btnRow}>
           <motion.button
@@ -234,124 +202,7 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
         </div>
 
       </div>
-
-      {/* Overrun Modal */}
-      <AnimatePresence>
-        {overrunModal && (
-          <OverrunModal
-            overrun={overrun}
-            state={overrunModal}
-            onClose={() => setOverrunModal(null)}
-            onBreak={() => setOverrunModal("financing")}
-            onFinancing={(opt) => setOverrunModal(opt)}
-            onFinish={onFinish}
-          />
-        )}
-      </AnimatePresence>
     </div>
-  );
-}
-
-/* ─────────────────────────────────────
-   OVERRUN MODAL
-───────────────────────────────────── */
-function OverrunModal({ overrun, state, onClose, onBreak, onFinancing, onFinish }) {
-  return (
-    <motion.div
-      style={css.overlay}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <motion.div
-        style={css.modal}
-        initial={{ opacity: 0, scale: 0.9, y: 32 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        transition={{ type: "spring", stiffness: 280, damping: 24 }}
-      >
-        <AnimatePresence mode="wait">
-          {state === "question" && (
-            <motion.div key="question" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <div style={{ fontSize: 44, textAlign: "center", marginBottom: 16 }}>⚠️</div>
-              <div style={css.modalTitle}>חרגת ב-{overrun} מיליארד שקל מהתקציב</div>
-              <div style={css.modalSub}>מה ברצונך לעשות?</div>
-              <div style={css.optionsList}>
-                <motion.button
-                  style={{ ...css.optionBtn, borderColor: "rgba(99,102,241,0.35)" }}
-                  whileHover={{ scale: 1.02, background: "rgba(255,255,255,0.1)" }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={onClose}
-                >
-                  <span style={css.optionEmoji}>✏️</span>
-                  <span style={css.optionLabel}>חזור אחורה ותקן את התקציב</span>
-                </motion.button>
-                <motion.button
-                  style={{ ...css.optionBtn, borderColor: "rgba(239,68,68,0.35)" }}
-                  whileHover={{ scale: 1.02, background: "rgba(255,255,255,0.1)" }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={onBreak}
-                >
-                  <span style={css.optionEmoji}>💥</span>
-                  <span style={css.optionLabel}>פרוץ את מסגרת התקציב</span>
-                </motion.button>
-              </div>
-            </motion.div>
-          )}
-
-          {state === "financing" && (
-            <motion.div key="financing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <div style={{ fontSize: 44, textAlign: "center", marginBottom: 16 }}>🏛️</div>
-              <div style={css.modalTitle}>פרצת את מסגרת התקציב</div>
-              <div style={css.modalSub}>עליך להעביר שוב את התקציב בכנסת ולהעלות מסים או לקחת הלוואות</div>
-              <div style={css.optionsList}>
-                {FINANCING_OPTS.map(opt => (
-                  <motion.button
-                    key={opt.id}
-                    style={css.optionBtn}
-                    whileHover={{ scale: 1.02, background: "rgba(255,255,255,0.1)" }}
-                    whileTap={{ scale: 0.97 }}
-                    onClick={() => onFinancing(opt)}
-                  >
-                    <span style={css.optionEmoji}>{opt.emoji}</span>
-                    <span style={css.optionLabel}>{opt.label}</span>
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-
-          {state && typeof state === "object" && (
-            <OverrunCynical opt={state} onFinish={onFinish} />
-          )}
-        </AnimatePresence>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-function OverrunCynical({ opt, onFinish }) {
-  useEffect(() => {
-    const t = setTimeout(() => onFinish(opt.id), 4000);
-    return () => clearTimeout(t);
-  }, []);
-  return (
-    <motion.div
-      key="cynical"
-      style={css.cynicalWrap}
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
-      <div style={css.cynicalEmoji}>{opt.emoji}</div>
-      <div style={css.cynicalChoice}>{opt.label}</div>
-      <div style={css.cynicalText}>{opt.cynical}</div>
-      <motion.div
-        style={css.cynicalBar}
-        initial={{ scaleX: 1 }}
-        animate={{ scaleX: 0 }}
-        transition={{ duration: 4.0, ease: "linear" }}
-      />
-    </motion.div>
   );
 }
 
@@ -1044,99 +895,6 @@ const css = {
     cursor: "pointer",
     letterSpacing: "-0.01em",
     transition: "all 0.2s",
-  },
-
-  /* Overrun banner */
-  overrunBanner: {
-    marginBottom: 12,
-    padding: "12px 18px",
-    borderRadius: 12,
-    background: "rgba(239,68,68,0.12)",
-    border: "1px solid rgba(239,68,68,0.35)",
-    color: "#FCA5A5",
-    fontSize: 14,
-    fontWeight: 700,
-    textAlign: "center",
-  },
-
-  /* Modal overlay */
-  overlay: {
-    position: "fixed", inset: 0,
-    background: "rgba(0,0,0,0.88)",
-    backdropFilter: "blur(14px)",
-    zIndex: 200,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "0 20px",
-  },
-  modal: {
-    width: "100%",
-    maxWidth: 420,
-    background: "linear-gradient(160deg, #0f1629 0%, #070B14 100%)",
-    border: "1px solid rgba(255,255,255,0.1)",
-    borderRadius: 24,
-    padding: "36px 28px 32px",
-    boxShadow: "0 32px 80px rgba(0,0,0,0.7)",
-    textAlign: "center",
-  },
-  modalTitle: {
-    fontSize: "clamp(20px, 5vw, 24px)",
-    fontWeight: 800,
-    color: "var(--text-1)",
-    letterSpacing: "-0.02em",
-    marginBottom: 10,
-    lineHeight: 1.3,
-  },
-  modalSub: {
-    fontSize: 15,
-    color: "var(--text-3)",
-    marginBottom: 28,
-    lineHeight: 1.5,
-  },
-  optionsList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 12,
-  },
-  optionBtn: {
-    display: "flex",
-    alignItems: "center",
-    gap: 14,
-    padding: "16px 20px",
-    borderRadius: 16,
-    border: "1px solid rgba(255,255,255,0.12)",
-    background: "rgba(255,255,255,0.05)",
-    cursor: "pointer",
-    textAlign: "right",
-    width: "100%",
-    transition: "background 0.2s",
-  },
-  optionEmoji: { fontSize: 26, flexShrink: 0 },
-  optionLabel: {
-    fontSize: 16,
-    fontWeight: 700,
-    color: "var(--text-1)",
-    letterSpacing: "-0.01em",
-  },
-
-  /* Cynical result */
-  cynicalWrap: { textAlign: "center" },
-  cynicalEmoji: { fontSize: 52, marginBottom: 12 },
-  cynicalChoice: {
-    fontSize: 18, fontWeight: 800,
-    color: "var(--text-1)", marginBottom: 14,
-    letterSpacing: "-0.02em",
-  },
-  cynicalText: {
-    fontSize: 15, color: "var(--text-3)",
-    lineHeight: 1.6, marginBottom: 28,
-  },
-  cynicalBar: {
-    height: 4, borderRadius: 100,
-    background: "linear-gradient(90deg, #6366F1, #8B5CF6)",
-    transformOrigin: "left center",
-    width: "100%",
   },
 
   /* Deficit bar */
