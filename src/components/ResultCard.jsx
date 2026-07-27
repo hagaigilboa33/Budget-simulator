@@ -82,7 +82,7 @@ function buildAnalysis(withDelta, deficit, totalBudget, overUnder) {
   let s3;
   if (deficit < 0) {
     const surplusBn = Math.round(Math.abs(deficit) / 100 * GDP);
-    s3 = `בסך הכל, רשמת עודף תקציבי של ${Math.abs(deficit)}% מהתמ"ג — כ-${surplusBn} מיליארד שקל`;
+    s3 = `בסך הכל, רשמת עודף תקציבי של ${Math.abs(deficit)}% מהתמ"ג — כ-${surplusBn} מיליארד שקל. עודף זה יאפשר להקטין את החוב הלאומי`;
   } else if (Math.abs(deficit - GOV_DEFICIT) < 0.05) {
     s3 = `בסך הכל, רשמת גירעון של ${deficit}% — בדיוק כמו יעד הגירעון הקבוע בחוק ל-2027`;
   } else {
