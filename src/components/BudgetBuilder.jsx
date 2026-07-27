@@ -241,8 +241,8 @@ function CategoryCard({ cat, value, onChange, totalBudget, values, currentIdx })
   const POOL       = totalBudget - 103;  // e.g. 613 - 103 = 510
   const PIE_TOTAL  = totalBudget;        // עיגול מלא = תקציב השחקן
 
-  // נותר לחלוקה: Pool - סכום כל הקטגוריות שהוקצו עד כה (כולל הנוכחית)
-  const allocatedSoFar = CATEGORIES.slice(0, currentIdx + 1).reduce((s, c) => s + values[c.id], 0);
+  // נותר לחלוקה: Pool - סכום כל הקטגוריות (תמיד גלובלי, עקבי בכל כיוון ניווט)
+  const allocatedSoFar = CATEGORIES.reduce((s, c) => s + values[c.id], 0);
   const remaining = POOL - allocatedSoFar;
 
   // נתחי הפאי: "אחר" קבוע (103) + כל הקטגוריות עד כה

@@ -66,8 +66,8 @@ const FINANCING = [
   },
 ];
 
-export default function BudgetScreen({ onBudgetSet, onBack }) {
-  const [budget,   setBudget]   = useState(REVENUE);
+export default function BudgetScreen({ onBudgetSet, onBack, initialBudget }) {
+  const [budget,   setBudget]   = useState(initialBudget ?? REVENUE);
   const [showModal, setShowModal] = useState(false);
   const [selected, setSelected] = useState(null);
   const trackRef = useRef(null);

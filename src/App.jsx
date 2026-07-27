@@ -42,7 +42,7 @@ export default function App() {
         <LandingScreen onStart={handleStart} />
       )}
       {screen === "budget" && (
-        <BudgetScreen onBudgetSet={handleBudgetSet} onBack={handleBackToBuilder} />
+        <BudgetScreen onBudgetSet={handleBudgetSet} onBack={handleBackToBuilder} initialBudget={totalBudget} />
       )}
       {screen === "builder" && (
         <BudgetBuilder
