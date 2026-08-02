@@ -53,10 +53,15 @@ export default function BudgetBuilder({ values, setValues, onFinish, onBack, nam
         if (prev && prev.text === ins.text && prev.catId === cat.id) return prev;
         return { text: ins.text, emoji: cat.emoji, color: cat.color, severity: ins.severity, id: Date.now(), catId: cat.id };
       });
-      if (diff < 0) {
+      // Flash only when moving DOWN and already below the 2027 benchmark
+      if (diff < 0 && val < cat.current) {
         if (ins.severity === "critical") triggerFlash("critical");
         else if (ins.severity === "warning") triggerFlash("warning");
       }
+    } else if (diff > 0) {
+      // Moving up with no applicable insight — clear any stuck toast immediately
+      clearTimeout(timer.current);
+      setInsight(null);
     }
   }, [setValues]);
 
